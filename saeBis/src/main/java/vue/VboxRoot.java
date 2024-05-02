@@ -1,18 +1,25 @@
 package vue;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import modele.Position;
+
+import java.io.File;
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class VboxRoot extends VBox implements ConstantesCanvas {
     private GraphicsContext graphicsContext2D;
 
     private Label labelNombreDePas;
 
-    private Canvas canvasCarte;
+    private static Canvas canvasCarte;
 
     private Position positionApprenti;
 
@@ -77,34 +84,126 @@ public class VboxRoot extends VBox implements ConstantesCanvas {
 
         // Récupère et affiche la position de la case cliquée avec la souris
         canvasCarte.setOnMouseClicked(event -> {
-            // boolean qui permet de verifier que la case n'est pas une case chiffrée
-            boolean etest = false;
-            int abscisse = (int) event.getX() / CARRE;
-            int ordonne = (int) event.getY() / CARRE;
-            // test des coordonnées de la case cliquée
-            if ( abscisse != 0 ){
-                if ( ordonne != 0){
-                    etest = true;
-                }
-            }
-            // si boolean vrai faire le coloriage
-            if (etest) {
-                Position positionClique = new Position(abscisse, ordonne);
-                System.out.println(positionClique);
-                labelToString.setText(position.toString());
+                    // boolean qui permet de voir si une case est déjà coloriée :
+                    boolean coloriee = false;
+                    // boolean qui permet de verifier que la case n'est pas une case chiffrée
+                    boolean etest = false;
+                    int abscisse = (int) event.getX() / CARRE;
+                    int ordonne = (int) event.getY() / CARRE;
+                    // test des coordonnées de la case cliquée
+                    if (abscisse != 0) {
+                        if (ordonne != 0) {
+                            etest = true;
+                        }
+                    }
+                    // si boolean vrai faire le coloriage
+                    if (etest) {
+                        Position positionClique = new Position(abscisse, ordonne);
+                        System.out.println(positionClique);
+                        labelToString.setText(position.toString());
 
-                // Permet de colorier la case cliquée ? fillRect a comme parametre : abscisse, ordonne, longueur, largeur
-                graphicsContext2D.setFill(COULEUR_CLIQUE);
-                graphicsContext2D.fillRect(abscisse * CARRE, ordonne * CARRE, CARRE, CARRE);
-            }
-            if (!etest) {
-                labelToString.setText( "Case cliquée invalide, veuillez réessayer");
+                        // Permet de colorier la case cliquée ? fillRect a comme parametre : abscisse, ordonne, longueur, largeur
+                        graphicsContext2D.setFill(COULEUR_CLIQUE);
+                        coloriee = true;
+                        graphicsContext2D.fillRect(abscisse * CARRE, ordonne * CARRE, CARRE, CARRE);
+                        this.deplacementAvecTimer(positionApprenti, positionClique);
 
-            }
-        });
+                    }
+                    if (!etest) {
+                        labelToString.setText("Case cliquée invalide, veuillez réessayer");
+
+                    }
+                });
+
+
 
 
     }
+    /**
+     * Méthode de déplacement avec un Timer.
+     * Elle déplace l'apprenti vers la position cible.
+     * !! ENLEVER LA COULEUR QU'IL MET A CHAQUE DEPLACEMENT !!
+     *
+     * @param positionApprenti Position actuelle de l'apprenti.
+     * @param positionCliquee  Position cible du déplacement.
+     */
+    private void deplacementAvecTimer(Position positionApprenti, Position positionCliquee) {
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                graphicsContext2D.clearRect(positionApprenti.getAbscisse() * CARRE + 2, positionApprenti.getOrdonnee() * CARRE + 2, CARRE - 4, CARRE - 4); // dimensiosn
+
+                positionApprenti.deplacementUneCase(positionCliquee);
+
+                graphicsContext2D.setFill(COULEUR_APPRENTI);
+                graphicsContext2D.fillOval(positionApprenti.getAbscisse() * CARRE + CARRE / 8, positionApprenti.getOrdonnee() * CARRE + CARRE / 4, LARGEUR_OVALE, HAUTEUR_OVALE);
+
+                Platform.runLater(() -> labelNombreDePas.setText("Nombre de pas : " + Position.getNombreDePas()));
+
+                if (positionApprenti.equals(positionCliquee)) {
+                    timer.cancel();
+
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(timerTask, 1000, 200);
+    }
+
+    /*
+    Read file from scanner
+    Lis tout simplement le document, parfait, juste a régler le probleme des deux cases l'une a cote de l'autre
+     */
+    public static class ReadFromFileUsingScanner {
+        public ReadFromFileUsingScanner() {
+            try {
+                // Chemin vers le fichier
+                File position = new File("C:\\Users\\TEMP.DINFO\\Downloads\\SAE-ORDONATTEUR-main\\SAE-ORDONATTEUR-main\\position.txt");
+
+                // Création d'un scanner pour lire le fichier
+                Scanner sc = new Scanner(position);
+
+                // Obtention du GraphicsContext à partir du Canvas
+                GraphicsContext graphicsContext2D = canvasCarte.getGraphicsContext2D();
+
+                // Lecture du fichier ligne par ligne
+                while (sc.hasNextLine()) {
+                    // Lecture de la ligne courante
+                    String line = sc.nextLine();
+
+                    // Séparation des valeurs en utilisant la virgule comme séparateur
+                    String[] values = line.split(", ");
+
+                    // Extraction des valeurs x et y
+                    int x = Integer.parseInt(values[0]);
+                    int y = Integer.parseInt(values[1]);
+
+                    String couleurTemple = values[2];
+                    String couleurCristal = values[3];
+                    System.out.println(couleurTemple);
+                    System.out.println(couleurCristal);
+
+
+
+                    // Remplissage des cases du canvas avec les couleurs
+                    graphicsContext2D.setFill(Paint.valueOf(couleurTemple));
+                    graphicsContext2D.fillRect(x * CARRE, y * CARRE, CARRE, CARRE);
+                    graphicsContext2D.setFill(Paint.valueOf(couleurCristal));
+                    graphicsContext2D.fillRect((x + 1) * CARRE, y * CARRE, CARRE, CARRE);
+                }
+
+                // Fermeture du scannerscr
+                sc.close();
+            } catch (Exception e) {
+                // Gestion des exceptions
+                e.printStackTrace();
+            }
+
+
+
+        };
+    }
+
 
 
 
