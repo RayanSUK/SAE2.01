@@ -54,7 +54,7 @@ public class Position {
     }
 
     //Les gets
-    public int getNombreDePas(){
+    public static int getNombreDePas(){
         return nombreDePas;
     }
 
