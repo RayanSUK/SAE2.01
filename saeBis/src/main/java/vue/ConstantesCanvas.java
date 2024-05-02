@@ -5,9 +5,9 @@ import javafx.scene.paint.Color;
 public interface ConstantesCanvas {
 
     // dimensions de la grille
-    final int LARGEUR_CANVAS = 760;
-    final int HAUTEUR_CANVAS = 760;
-    final int CARRE = 40;
+    final int LARGEUR_CANVAS = 640;
+    final int HAUTEUR_CANVAS = 640;
+    final int CARRE = 20;
 
     //couleur grille
     final Color COULEUR_GRILLE = Color.BLACK;
@@ -16,9 +16,11 @@ public interface ConstantesCanvas {
 
     final Color COULEUR_CLIQUE = Color.RED;
 
-    final int LARGEUR_OVALE = 38;
+    final Color [] COULEURS_TEMPLES = {Color.BLUE,Color.YELLOW,Color.GREEN,Color.ORANGE,Color.FUCHSIA};
 
-    final int HAUTEUR_OVALE = 38;
+    final int LARGEUR_OVALE = 19;
+
+    final int HAUTEUR_OVALE = 19;
 
 
 
