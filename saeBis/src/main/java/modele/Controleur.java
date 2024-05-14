@@ -2,6 +2,7 @@ package modele;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import vue.VBoxCanva;
 import vue.VBoxRoot;
@@ -20,6 +21,7 @@ public class Controleur implements EventHandler {
             VBoxRoot.getApprenti().setTemples(temples);
             VBoxRoot.getCanvas().setTemples(temples);
             System.out.println(VBoxRoot.getApprenti());
+
 
 
 

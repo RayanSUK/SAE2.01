@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class ApprentiOrdonnateurApplication extends Application {
     public void start(Stage stage) {
         VBox root = new VBoxRoot();
-        Scene scene = new Scene(root,600,580);
+        Scene scene = new Scene(root,700,580);
         stage.setScene(scene);
         stage.setTitle("PROJETSAE");
         stage.show();

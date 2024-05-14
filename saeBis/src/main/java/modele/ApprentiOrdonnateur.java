@@ -30,4 +30,5 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
     public void setPositionApprenti(Position positionApprenti) {
         this.positionApprenti = positionApprenti;
     }
+
 }

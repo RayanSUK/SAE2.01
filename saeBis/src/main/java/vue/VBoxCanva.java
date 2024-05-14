@@ -1,12 +1,16 @@
 package vue;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import modele.*;
 
 import java.util.Collection;
@@ -22,6 +26,8 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
     private static Canvas canvasCarte;
 
     private  Collection<Temple> temples;
+
+    private Position positionApprenti ;
 
 
     public VBoxCanva(){
@@ -68,7 +74,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         }
 
         //position apprenti et affichage
-        Position positionApprenti = VBoxRoot.getApprenti().getPosition();
+        positionApprenti = VBoxRoot.getApprenti().getPosition();
         graphicsContext2D.setFill(COULEUR_APPRENTI);
         graphicsContext2D.fillOval(positionApprenti.getAbscisse()*CARRE +0.5,
                 positionApprenti.getOrdonnee()*CARRE + 0.5,
@@ -118,6 +124,16 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
                     }
                 });
+        Button bouton = new Button("Test effacer");
+        bouton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                effacerCanva();
+
+            }
+
+        });
+        this.getChildren().add(bouton);
 
 
     }
@@ -132,7 +148,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         for (Temple temple : temples) {
             Position positionTemple = temple.getPositionTemple();
             graphicsContext2D.setFill(COULEURS_TEMPLES[temple.getCouleurTemple()-1]);
-            graphicsContext2D.fillRect(positionTemple.getAbscisse()*CARRE,positionTemple.getOrdonnee()*CARRE,CARRE,CARRE);
+            graphicsContext2D.fillRect(positionTemple.getAbscisse()*CARRE+1,positionTemple.getOrdonnee()*CARRE+1,CARRE-1,CARRE-1);
         }
     }
 
@@ -171,12 +187,26 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         timer.scheduleAtFixedRate(timerTask, 1000, 200);
     }
 
+    public void effacerCanva(){
+        graphicsContext2D.setFill(Paint.valueOf("white"));
+        for ( int i = 20; i< LARGEUR_CANVAS; i+= CARRE){
+            for ( int j = 20; j < HAUTEUR_CANVAS; j+= CARRE) {
+                graphicsContext2D.fillRect(i +1 , j+1, CARRE - 2, CARRE - 2);
+            }
+        }
+        graphicsContext2D.setFill(COULEUR_APPRENTI);
+        positionApprenti.setPosition(LARGEUR_CANVAS/(CARRE*2), HAUTEUR_CANVAS/(CARRE*2));
+        graphicsContext2D.fillOval(positionApprenti.getAbscisse()*CARRE +0.5,
+                positionApprenti.getOrdonnee()*CARRE + 0.5,
+                LARGEUR_OVALE,HAUTEUR_OVALE);
+    }
+
 }
 
 /*
-- ajustement du nombre de pas et de la position
+- ajustement de la position
+-creer la classe crystal
 -methode d'échange de crystal
--ne pas effacer quand tu passes sur un temp ou un crystal!!!
-- effacr caqe quand changement scenario
+-ne pas effacer quand tu passes sur un temple ou un crystal!!!
 - representer les temples et cristaux dans les tableaux
  */
