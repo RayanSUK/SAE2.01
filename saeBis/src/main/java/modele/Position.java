@@ -67,7 +67,7 @@ public class Position {
     }
 
     public String toString(){
-        return("Position du joueur : " + this.getAbscisse() + ", " + this.getOrdonnee());
+        return("Position du joueur : " + (this.getAbscisse()-16) + ", " + (this.getOrdonnee()-16));
     }
 
     public void setPosition(int parAbscisse, int parOrd){

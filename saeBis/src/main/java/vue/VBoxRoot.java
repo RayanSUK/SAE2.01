@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import modele.ApprentiOrdonnateur;
 import modele.ConstantesCanvas;
 import modele.Controleur;
+import modele.Cristal;
 
 import java.io.File;
 
@@ -15,6 +16,7 @@ public class VBoxRoot extends VBox implements ConstantesCanvas {
     private static ApprentiOrdonnateur apprenti;
     private static Controleur controleur;
     private static VBoxCanva canva;
+
 
     public VBoxRoot() {
         apprenti = new ApprentiOrdonnateur();
@@ -54,4 +56,6 @@ public class VBoxRoot extends VBox implements ConstantesCanvas {
     public static VBoxCanva getCanvas() {
         return canva;
     }
+
+
 }

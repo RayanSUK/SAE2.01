@@ -23,6 +23,9 @@ public interface ConstantesCanvas {
 
     final int HAUTEUR_OVALE = 19;
 
+    final int LARGEUR_CRISTAL = 15;
+    final int HAUTEUR_CRISTAL = 15;
+
     final String [] INTITULE_MENU_SCENARIOS = {"Choix du scénario", "coucouu"};
 
 

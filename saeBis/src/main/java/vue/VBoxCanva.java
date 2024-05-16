@@ -113,6 +113,11 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                     // si boolean vrai faire le coloriage
                     if (etest) {
                         Position positionClique = new Position(abscisse, ordonne);
+                       //for (Temple temple : temples){
+                       //    if ( positionClique.equals(temple.getPositionTemple())) {
+
+                       //    }
+                       //}
                         System.out.println(positionClique);
                         //labelToString.setText(position.toString());
 
@@ -140,7 +145,6 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         });
         this.getChildren().add(bouton);
 
-
     }
 
     public List<Temple> getTemples() {
@@ -154,6 +158,16 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
             Position positionTemple = temple.getPositionTemple();
             graphicsContext2D.setFill(COULEURS_TEMPLES[temple.getCouleurTemple()-1]);
             graphicsContext2D.fillRect(positionTemple.getAbscisse()*CARRE+1,positionTemple.getOrdonnee()*CARRE+1,CARRE-1,CARRE-1);
+        }
+    }
+
+    public void setCristaux(List<Cristal> parCristaux) {
+        this.cristaux = parCristaux ;
+        // affichage des temples
+        for (Cristal cristal : cristaux) {
+            Position positionCristal = cristal.getPositionCristal();
+            graphicsContext2D.setFill(COULEURS_TEMPLES[cristal.getCouleurCristal()-1]);
+            graphicsContext2D.fillOval(positionCristal.getAbscisse()*CARRE+1,positionCristal.getOrdonnee()*CARRE+1,CARRE-1,CARRE-1);
         }
     }
 
@@ -175,7 +189,13 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                 //Position positionCible = positionsCibles.get(tabIndice[0]);
 
                 graphicsContext2D.clearRect(positionApprenti.getAbscisse() * CARRE + 1, positionApprenti.getOrdonnee() * CARRE + 1, CARRE - 2, CARRE - 2); // dimensiosn
-
+                for (Temple temple : temples) {
+                    Position positionTemple = temple.getPositionTemple();
+                    if (positionApprenti.equals(positionTemple)) {
+                        graphicsContext2D.setFill(COULEURS_TEMPLES[temple.getCouleurTemple() - 1]);
+                        graphicsContext2D.fillRect(positionTemple.getAbscisse() * CARRE + 1, positionTemple.getOrdonnee() * CARRE + 1, CARRE - 1, CARRE - 1);
+                    }
+                }
                 positionApprenti.deplacementUneCase(positionsCibles);
 
                 graphicsContext2D.setFill(COULEUR_APPRENTI);
@@ -204,6 +224,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         graphicsContext2D.fillOval(positionApprenti.getAbscisse()*CARRE +0.5,
                 positionApprenti.getOrdonnee()*CARRE + 0.5,
                 LARGEUR_OVALE,HAUTEUR_OVALE);
+
     }
 
 

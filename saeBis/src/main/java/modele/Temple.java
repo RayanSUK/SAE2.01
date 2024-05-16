@@ -8,7 +8,6 @@ public class Temple {
     public Temple(Position parPosition, int parCouleurTemple) {
         positionTemple = parPosition;
         couleurTemple = parCouleurTemple;
-        couleurCrystal = parCouleurCrystal;
 
     }
 
