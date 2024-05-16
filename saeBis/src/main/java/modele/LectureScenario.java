@@ -1,9 +1,12 @@
 package modele;
 
+import javafx.util.Pair;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
 
 public class LectureScenario implements ConstantesCanvas{
@@ -14,12 +17,12 @@ public class LectureScenario implements ConstantesCanvas{
      * @return une collection de temples (de la classe temple)
      */
 
-    public static Collection<Temple> lecture(File fichierScenario){
-        Collection <Temple> templesDuScenario = new ArrayList<>();
+    public static Pair<List<Temple>, List<Cristal>> lecture(File fichierScenario){
+        List <Temple> templesDuScenario = new ArrayList<>();
+        List <Cristal> cristaux = new ArrayList<>();
         /* à vous de remplacer la liste par un type de collection plus adapté */
-        try{
+        try {
             Scanner scanner = new Scanner(fichierScenario);
-            Temple temple;
             while (scanner.hasNext()){
                 //Largeur_CANVAS = 31 HAUTEUR_CANVAS = 31
                 // permet de traiter tout les scénarios poposés
@@ -30,16 +33,19 @@ public class LectureScenario implements ConstantesCanvas{
                 int posY = scanner.nextInt() + HAUTEUR_CANVAS/(2*CARRE);
 
                 int couleur = scanner.nextInt();
-                int cristal = scanner.nextInt();
-                temple = new Temple(new Position(posX,posY),couleur,cristal);
+                int couleur_cristal = scanner.nextInt();
+                Temple temple = new Temple(new Position(posX,posY),couleur);
                 templesDuScenario.add(temple);
+                Cristal cristal = new Cristal(new Position(posX, posY), couleur_cristal);
+                cristaux.add(cristal);
 
             }
             scanner.close();
+
         }
         catch (FileNotFoundException e){
             System.out.println(e.getMessage());
         }
-        return templesDuScenario;
+        return new Pair<List<Temple>, List<Cristal>>((List<Temple>) templesDuScenario, cristaux);
     }
 }
