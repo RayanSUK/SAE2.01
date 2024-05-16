@@ -14,6 +14,7 @@ import javafx.scene.paint.Paint;
 import modele.*;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,9 +26,13 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
     private static Canvas canvasCarte;
 
-    private  Collection<Temple> temples;
+    private  List<Temple> temples;
+
+    private Collection<Cristal> cristaux;
 
     private Position positionApprenti ;
+
+    private Label labelToString;
 
 
     public VBoxCanva(){
@@ -80,12 +85,12 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                 positionApprenti.getOrdonnee()*CARRE + 0.5,
                 LARGEUR_OVALE,HAUTEUR_OVALE);
 
-
-        // Position pour le toString
-        Position position = new Position(10,10);
-        Label labelToString = new Label(position.toString());
-        // Affichage du toString
-        this.getChildren().add(labelToString);
+//
+        //// Position pour le toString
+        //Position position = new Position(10,10);
+        //labelToString = new Label(position.toString());
+        //// Affichage du toString
+        //this.getChildren().add(labelToString);
 
 
 
@@ -109,7 +114,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                     if (etest) {
                         Position positionClique = new Position(abscisse, ordonne);
                         System.out.println(positionClique);
-                        labelToString.setText(position.toString());
+                        //labelToString.setText(position.toString());
 
                         // Permet de colorier la case cliquée ? fillRect a comme parametre : abscisse, ordonne, longueur, largeur
                         graphicsContext2D.setFill(COULEUR_CLIQUE);
@@ -138,12 +143,12 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
     }
 
-    public Collection<Temple> getTemples() {
+    public List<Temple> getTemples() {
         return temples;
     }
 
-    public   void setTemples(Collection<Temple> temples) {
-        this.temples = temples;
+    public void setTemples(List<Temple> parTemples) {
+        this.temples = parTemples;
         // affichage des temples
         for (Temple temple : temples) {
             Position positionTemple = temple.getPositionTemple();
@@ -201,12 +206,15 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                 LARGEUR_OVALE,HAUTEUR_OVALE);
     }
 
+
+
+
+
+
 }
 
 /*
-- ajustement de la position
--creer la classe crystal
--methode d'échange de crystal
--ne pas effacer quand tu passes sur un temple ou un crystal!!!
-- representer les temples et cristaux dans les tableaux
+-methode d'échange de cristal
+-ne pas effacer quand tu passes sur un temple ou un cristal!!! -> à moitié réglé,
+ on doit avoir le choix de prendre ou non le cristal
  */
