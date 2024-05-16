@@ -1,11 +1,14 @@
 package modele;
 
 import java.util.Collection;
+import java.util.List;
 
 public class ApprentiOrdonnateur implements ConstantesCanvas {
     private Position positionApprenti;
 
-    private Collection<Temple> temples;
+    private List<Temple> temples;
+
+    private List<Cristal> crystaux;
 
     private boolean crystalPorte;
 
@@ -19,7 +22,7 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         return temples;
     }
 
-    public void setTemples(Collection<Temple> temples) {
+    public void setTemples(List<Temple> temples) {
         this.temples = temples;
     }
 
@@ -31,4 +34,11 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         this.positionApprenti = positionApprenti;
     }
 
+    public List<Cristal> getCrystaux() {
+        return crystaux;
+    }
+
+    public void setCrystaux(List<Cristal> crystaux) {
+        this.crystaux = crystaux;
+    }
 }
