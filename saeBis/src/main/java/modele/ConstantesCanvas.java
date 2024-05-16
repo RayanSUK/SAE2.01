@@ -17,7 +17,7 @@ public interface ConstantesCanvas {
     final Color COULEUR_CLIQUE = Color.RED;
 
     final Color [] COULEURS_TEMPLES = {Color.BLUE,Color.YELLOW,Color.GREEN,Color.ORANGE,Color.FUCHSIA,
-    Color.BROWN, Color.SKYBLUE, Color.SIENNA};
+    Color.BROWN, Color.SKYBLUE, Color.SIENNA,Color.PINK,Color.LEMONCHIFFON,Color.SEAGREEN,};
 
     final int LARGEUR_OVALE = 19;
 
