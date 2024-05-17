@@ -1,5 +1,7 @@
 package modele;
 
+import javafx.geometry.Pos;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -24,6 +26,23 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
 
     public void setTemples(List<Temple> temples) {
         this.temples = temples;
+    }
+
+    public Cristal echangeCristaux(Cristal cristal) {
+        if (positionApprenti.equals(cristal.getPositionCristal())) {
+            if (!(cristalPorte[0] == null)) {
+                Position positionCristal = cristalPorte[0].getPositionCristal();
+                int couleurCristal = cristal.getCouleurCristal();
+                Cristal cristal2 = new Cristal(positionCristal, couleurCristal);
+                cristalPorte[0] = cristal;
+                cristal = cristal2;
+            } else {
+                cristalPorte[0] = cristal;
+
+            }
+            return cristalPorte[0];
+        }
+        return null;
     }
 
     public Position getPosition() {
