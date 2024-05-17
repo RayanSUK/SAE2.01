@@ -30,6 +30,8 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
     private Collection<Cristal> cristaux;
 
+    private ApprentiOrdonnateur apprentiOrdonnateur;
+
     private Position positionApprenti ;
 
     private Label labelToString;
@@ -79,7 +81,8 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         }
 
         //position apprenti et affichage
-        positionApprenti = VBoxRoot.getApprenti().getPosition();
+        apprentiOrdonnateur = VBoxRoot.getApprenti();
+        positionApprenti = apprentiOrdonnateur.getPosition();
         graphicsContext2D.setFill(COULEUR_APPRENTI);
         graphicsContext2D.fillOval(positionApprenti.getAbscisse()*CARRE +0.5,
                 positionApprenti.getOrdonnee()*CARRE + 0.5,
@@ -171,6 +174,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         }
     }
 
+
     /**
      * Méthode de déplacement avec un Timer.
      * Elle déplace l'apprenti vers la position cible.
@@ -189,11 +193,25 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                 //Position positionCible = positionsCibles.get(tabIndice[0]);
 
                 graphicsContext2D.clearRect(positionApprenti.getAbscisse() * CARRE + 1, positionApprenti.getOrdonnee() * CARRE + 1, CARRE - 2, CARRE - 2); // dimensiosn
-                for (Temple temple : temples) {
-                    Position positionTemple = temple.getPositionTemple();
-                    if (positionApprenti.equals(positionTemple)) {
-                        graphicsContext2D.setFill(COULEURS_TEMPLES[temple.getCouleurTemple() - 1]);
-                        graphicsContext2D.fillRect(positionTemple.getAbscisse() * CARRE + 1, positionTemple.getOrdonnee() * CARRE + 1, CARRE - 1, CARRE - 1);
+
+                if (! (temples == null)) {
+                    // Test position temple
+                    for (Temple temple : temples) {
+                        Position positionTemple = temple.getPositionTemple();
+                        // Si l'apprenti est sur un temple on re-colorie apres son passage
+                        if (positionApprenti.equals(positionTemple)) {
+                            graphicsContext2D.setFill(COULEURS_TEMPLES[temple.getCouleurTemple() - 1]);
+                            graphicsContext2D.fillRect(positionTemple.getAbscisse() * CARRE + 1, positionTemple.getOrdonnee() * CARRE + 1, CARRE - 1, CARRE - 1);
+                        }
+                    }
+                    // Test position Cristal
+                    for (Cristal cristal : cristaux) {
+                        Position positionCristal = cristal.getPositionCristal();
+                        // Si l'apprenti est sur un temple avec un cristal on re-colorie apres son passage
+                        if (positionApprenti.equals(positionCristal)) {
+                            graphicsContext2D.setFill(COULEURS_TEMPLES[cristal.getCouleurCristal() - 1]);
+                            graphicsContext2D.fillOval(positionCristal.getAbscisse() * CARRE + 1, positionCristal.getOrdonnee() * CARRE + 1, CARRE - 1, CARRE - 1);
+                        }
                     }
                 }
                 positionApprenti.deplacementUneCase(positionsCibles);
@@ -212,6 +230,9 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         timer.scheduleAtFixedRate(timerTask, 1000, 200);
     }
 
+    /** Méthode qui ne prend rien en parametre et ne renvoie rien,
+     * elle redessine l'intérieur des cases de la grille
+     */
     public void effacerCanva(){
         graphicsContext2D.setFill(Paint.valueOf("white"));
         for ( int i = 20; i< LARGEUR_CANVAS; i+= CARRE){
