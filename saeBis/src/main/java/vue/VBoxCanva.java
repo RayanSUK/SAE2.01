@@ -36,6 +36,10 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
     private Label labelToString;
 
+    private GraphicsContext graphicsContextCristal;
+
+    private Canvas canvaCristal;
+
 
     public VBoxCanva(){
 
@@ -137,23 +141,33 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
                     }
                 });
-        Button bouton = new Button("Test effacer");
-        bouton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                effacerCanva();
 
-            }
+        Label labelCristal = new Label("Cristal porté : ");
+        this.getChildren().add(labelCristal);
+        VBox.setMargin(labelCristal,new Insets(10));
 
-        });
-        this.getChildren().add(bouton);
+        // Création d'un canva pour afficher une case qui montre le cristal porté par le joueur
+        canvaCristal = new Canvas();
+        canvaCristal.setHeight(80);
+        canvaCristal.setWidth(80);
+        graphicsContextCristal = canvaCristal.getGraphicsContext2D();
+        graphicsContextCristal.setStroke(COULEUR_GRILLE);
+        graphicsContextCristal.strokeRect( 0 , 0 , CARRE*2- 5, CARRE*2-5);
+
+
+        this.getChildren().add(canvaCristal);
+        VBox.setMargin(canvaCristal, new Insets(10));
 
     }
+
+
 
     public List<Temple> getTemples() {
         return temples;
     }
 
+
+    // Méthode pour placer les temples
     public void setTemples(List<Temple> parTemples) {
         this.temples = parTemples;
         // affichage des temples
@@ -164,6 +178,8 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         }
     }
 
+
+    // Méthode pour placer les cristaux
     public void setCristaux(List<Cristal> parCristaux) {
         this.cristaux = parCristaux ;
         // affichage des temples
@@ -228,6 +244,12 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
             }
         };
         timer.scheduleAtFixedRate(timerTask, 1000, 200);
+    }
+    
+    public void echangeGraphique(){
+        if (apprentiOrdonnateur.getCristalPorte() == null){
+            //graphicsContextCristal.fillOval();
+        }
     }
 
     /** Méthode qui ne prend rien en parametre et ne renvoie rien,

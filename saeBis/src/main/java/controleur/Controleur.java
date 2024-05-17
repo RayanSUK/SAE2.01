@@ -1,9 +1,12 @@
-package modele;
+package controleur;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
+import modele.Cristal;
+import modele.LectureScenario;
+import modele.Temple;
 import vue.VBoxCanva;
 import vue.VBoxRoot;
 import java.util.List;
@@ -22,7 +25,7 @@ public class Controleur implements EventHandler {
             VBoxRoot.getCanvas().effacerCanva();
             VBoxRoot.getApprenti().setTemples(temples);
             VBoxRoot.getCanvas().setTemples(temples);
-            VBoxRoot.getApprenti().setCrystaux(cristaux);
+            VBoxRoot.getApprenti().setCristaux(cristaux);
             VBoxRoot.getCanvas().setCristaux(cristaux);
             System.out.println(VBoxRoot.getApprenti());
 

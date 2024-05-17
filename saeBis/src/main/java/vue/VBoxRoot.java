@@ -7,8 +7,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import modele.ApprentiOrdonnateur;
 import modele.ConstantesCanvas;
-import modele.Controleur;
-import modele.Cristal;
+import controleur.Controleur;
 
 import java.io.File;
 

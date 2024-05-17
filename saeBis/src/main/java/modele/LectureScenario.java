@@ -12,9 +12,9 @@ import java.util.Scanner;
 public class LectureScenario implements ConstantesCanvas{
     /**
      * La méthode de lecture prend en paramètre un fichier contenant un scénario
-     * et retourne une collection de donnée contenant les temples à réaligner
+     * et retourne une pair de donnée contenant les temples à réaligner ainsi que les cristaux
      * @param fichierScenario : le fichier lu
-     * @return une collection de temples (de la classe temple)
+     * @return une apir de list de cristaux et de cristaux
      */
 
     public static Pair<List<Temple>, List<Cristal>> lecture(File fichierScenario){

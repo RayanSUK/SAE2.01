@@ -9,4 +9,5 @@ module org.example.saebis {
     exports org.example.saebis;
     exports vue;
     exports modele;
+    exports controleur;
 }

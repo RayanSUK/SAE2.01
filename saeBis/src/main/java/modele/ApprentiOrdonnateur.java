@@ -10,13 +10,14 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
 
     private List<Temple> temples;
 
-    private List<Cristal> crystaux;
+    private List<Cristal> cristaux;
 
-    private boolean crystalPorte;
+    private final Cristal [] cristalPorte = new Cristal[1];
 
     public ApprentiOrdonnateur(){
         // Position initiale du joueur
         positionApprenti = new Position(LARGEUR_CANVAS/(CARRE*2),HAUTEUR_CANVAS/(CARRE*2) );
+
     }
 
 
@@ -53,11 +54,15 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         this.positionApprenti = positionApprenti;
     }
 
-    public List<Cristal> getCrystaux() {
-        return crystaux;
+    public List<Cristal> getCristaux() {
+        return cristaux;
     }
 
-    public void setCrystaux(List<Cristal> crystaux) {
-        this.crystaux = crystaux;
+    public void setCristaux(List<Cristal> cristaux) {
+        this.cristaux = cristaux;
+    }
+
+    public Cristal[] getCristalPorte() {
+        return cristalPorte;
     }
 }

@@ -24,5 +24,7 @@ public class Cristal {
     public void setCouleurCristal(int couleurcristal) {
         this.couleurcristal = couleurcristal;
     }
+
+
 }
 
