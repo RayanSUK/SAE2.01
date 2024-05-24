@@ -21,8 +21,15 @@ public class Cristal {
         return positioncristal;
     }
 
+    public void setPositionCristal(Position parPosition){
+        positioncristal = parPosition;
+    }
     public void setCouleurCristal(int couleurcristal) {
         this.couleurcristal = couleurcristal;
+    }
+
+    public String toString() {
+        return getPositionCristal().toString() + " " + getCouleurCristal();
     }
 
 
