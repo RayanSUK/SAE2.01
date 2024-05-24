@@ -12,7 +12,7 @@ import vue.VBoxRoot;
 import java.util.List;
 import java.io.File;
 import java.util.Collection;
-
+/** Le controleur fait le lien entre le modele et la vue*/
 public class Controleur implements EventHandler {
     public void handle(Event event) {
         Object userData = ((MenuItem)event.getSource()).getUserData();
