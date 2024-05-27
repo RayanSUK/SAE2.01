@@ -198,8 +198,8 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
      */
     private void deplacementAvecTimer(Position positionApprenti, Position positionsCibles) {
         Timer timer = new Timer();
-        final int [] tabIndice = {0}; 
-        
+        final int [] tabIndice = {0};
+
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -247,7 +247,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         };
         timer.scheduleAtFixedRate(timerTask, 1000, 200);
     }
-    
+
     public void echangeGraphique(){
         if (!(apprentiOrdonnateur.getCristalPorte() == null)){
             for (Cristal cristal : cristaux) {
