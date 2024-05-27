@@ -6,7 +6,7 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
     private Position positionApprenti;
     private List<Temple> temples;
     private List<Cristal> cristaux;
-    private Cristal [] cristalPorte = new Cristal[1];
+    private int cristalPorte =-1;
     public ApprentiOrdonnateur(){
  // Position initiale du joueur
         positionApprenti = new Position(LARGEUR_CANVAS/(CARRE* 2),HAUTEUR_CANVAS/(CARRE*2) );
@@ -19,19 +19,24 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         this.temples = temples;
     }
 
-    public Cristal echangeCristaux(Cristal cristal) {
-        if (!(cristalPorte[1] == null)) {
-            Position positionCristal = cristalPorte[0].getPositionCristal();
-            int couleurCristal = cristal.getCouleurCristal();
-            Cristal cristal2 = new Cristal(positionCristal, couleurCristal);
-            cristalPorte[0] = cristal;
-            cristal = cristal2;
+    public void echangeCristaux(Cristal cristal) {
+        //if (!(cristalPorte == -1)) {
+        //    for (int i = 0; i< cristaux.size(); i++) {
+        //        if (cristaux.get(i) == cristal) {
+        //            cristalPorte = i;
+        //        }
+        //        break;
+        //    }
+        //}
+        //else {
+        //    cristaux.set(cristalPorte, cristal);
 
-        } else {
-            cristalPorte[0] = cristal;
-
+        //}
+        for (int i = 0; i < cristaux.size(); i++) {
+            if (cristaux.get(i) == cristal) {
+                cristalPorte = i;
+            }
         }
-        return cristalPorte[0];
     }
 
     public Position getPosition() {
@@ -51,6 +56,9 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
     }
 
     public Cristal getCristalPorte() {
-        return cristalPorte[1];
+        if ( cristalPorte == -1) {
+            return null;
+        }
+        return cristaux.get(cristalPorte);
     }
 }
