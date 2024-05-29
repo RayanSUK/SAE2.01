@@ -11,13 +11,33 @@ import controleur.Controleur;
 
 import java.io.File;
 
+/**
+ * La classe VBoxRoot est la racine de la vue de l'application.
+ *  Elle organise les différents composants de l'interface
+ */
 public class VBoxRoot extends VBox implements ConstantesCanvas {
+    /**
+     * Représente le joueur
+     */
     private static ApprentiOrdonnateur apprenti;
+
+    /**
+     * Architecture MVC
+     */
     private static Controleur controleur;
+
+    /**
+     * Représente la carte
+     */
     private static VBoxCanva canva;
 
 
+    /**
+     * Constructeur de la classe pour initialiser les composants de l'interface et les ajoutées.
+     */
     public VBoxRoot() {
+
+        // instancie les composantes
         apprenti = new ApprentiOrdonnateur();
         canva = new VBoxCanva();
         controleur = new Controleur();
@@ -43,20 +63,32 @@ public class VBoxRoot extends VBox implements ConstantesCanvas {
         }
 
 
-        // la vue
+        // ajout
         this.getChildren().add(menuBar);
         this.getChildren().add(canva);
 
     }
+
+    /**
+     * Accesseur au champ apprenti
+     * @return apprenti, le joueur
+     */
     public static ApprentiOrdonnateur getApprenti() {
         return apprenti;
     }
 
+    /**
+     * Accesseur au champ canva
+     * @return canva, la carte
+     */
     public static VBoxCanva getCanvas() {
         return canva;
     }
 
-
+    /**
+     * Accesseur au champ controleur
+     * @return controleur
+     */
     public static Controleur getControleur(){
         return controleur;
     }
