@@ -40,6 +40,28 @@ public class Position {
 
     }
 
+    public void deplacementCristal (Position parPosition){
+        if (this.abscisse > parPosition.abscisse){
+            this.abscisse -=1;
+            return;
+        }
+        if (this.abscisse < parPosition.abscisse) {
+            this.abscisse += 1;
+            return;
+        }
+
+        if (this.ordonnee > parPosition.ordonnee) {
+            this.ordonnee -= 1;
+            return;
+        }
+
+        if (this.ordonnee < parPosition.ordonnee) {
+            this.ordonnee += 1;
+            return;
+        }
+
+    }
+
 
 
 
