@@ -2,11 +2,14 @@ package modele;
 
 import java.util.Collection;
 import java.util.List;
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class ApprentiOrdonnateur implements ConstantesCanvas {
     private Position positionApprenti;
     private List<Temple> temples;
     private List<Cristal> cristaux;
     private int cristalPorte =-1;
+    private boolean echangeDispo = true;
+
     public ApprentiOrdonnateur(){
  // Position initiale du joueur
         positionApprenti = new Position(LARGEUR_CANVAS/(CARRE* 2),HAUTEUR_CANVAS/(CARRE*2) );
@@ -20,22 +23,20 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
     }
 
     public void echangeCristaux(Cristal cristal) {
-        //if (!(cristalPorte == -1)) {
-        //    for (int i = 0; i< cristaux.size(); i++) {
-        //        if (cristaux.get(i) == cristal) {
-        //            cristalPorte = i;
-        //        }
-        //        break;
-        //    }
-        //}
-        //else {
-        //    cristaux.set(cristalPorte, cristal);
-
-        //}
-        for (int i = 0; i < cristaux.size(); i++) {
-            if (cristaux.get(i) == cristal) {
-                cristalPorte = i;
+        if (echangeDispo) {
+            if (cristal.getPositionCristal().equals(positionApprenti)) {
+                cristalPorte = cristaux.indexOf(cristal);
+                echangeDispo = false;
             }
+        }
+    }
+
+    public void lacherCristal() {
+        for (Cristal cristal : cristaux ) {
+            if (cristal.getPositionCristal().equals(positionApprenti)) {
+                return;
+            }
+            cristalPorte = -1;
         }
     }
 
@@ -59,6 +60,15 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         if ( cristalPorte == -1) {
             return null;
         }
-        return cristaux.get(cristalPorte);
+        System.out.println(cristalPorte);
+        return cristaux.get(cristalPorte) ;
+    }
+
+    public boolean isEchangeDispo() {
+        return echangeDispo;
+    }
+
+    public void setEchangeDispo() {
+        echangeDispo = true;
     }
 }
