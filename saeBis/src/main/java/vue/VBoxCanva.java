@@ -1,5 +1,6 @@
 package vue;
 
+import controleur.Controleur;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -46,6 +47,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
 
     public VBoxCanva(){
+        controleur = new Controleur();
         //l'étiquette qui affiche le nombre de pas
         labelNombreDePas = new Label ("Nombre de pas : 0");
 
@@ -267,20 +269,26 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
                 if (positionApprenti.equals(positionsCibles)) {
                     timer.cancel();
-                    echangeGraphique();
+                    timer.cancel();
+                    if (apprentiOrdonnateur.getCristalPorte()!=null) {
+                        System.out.println("Le cristal porté est :" + apprentiOrdonnateur.getCristalPorte().toString());
+                    }
 
                 }
+                apprentiOrdonnateur.setEchangeDispo();
             }
         };
         timer.scheduleAtFixedRate(timerTask, 1000, 200);
     }
 
     public void echangeGraphique(){
+        // si l'apprenti a un cristal
         if (!(apprentiOrdonnateur.getCristalPorte() == null)){
             // Le cristal porté avant échange
             Cristal cristaltemp = apprentiOrdonnateur.getCristalPorte();
             //Parcours de la liste des cristaux
             for (Cristal cristal : cristaux) {
+                // si la position de l'apprenti est égale à la position du cristal de la boucle
                 if (apprentiOrdonnateur.getPosition().equals(cristal.getPositionCristal())) {
                     //System.out.println("TEST 1");
                     // si le cristal testé n'est pas le cristal porté
@@ -302,6 +310,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                     }
                 }
             }
+            //apprentiOrdonnateur.lacherCristal();
         }
 
         // C BON
