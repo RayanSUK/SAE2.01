@@ -19,35 +19,89 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * La classe VboxCanva implémente tous les composants graphiques
 
+ */
 public class VBoxCanva extends VBox implements ConstantesCanvas {
+    /**
+     * Le champ graphicsContext2D représente le grillage et les forme de notre jeu
+     */
     private GraphicsContext graphicsContext2D;
 
+    /**
+     * Le champ labelNombreDePas affiche le nombre de pas du joueur
+     */
+
     private Label labelNombreDePas;
+    /**
+     * Le champ canvasCarte est une fenetre dans lequel s'affiche les éléments graphiques
+     */
 
     private static Canvas canvasCarte;
 
+    /**
+     * Une liste qui contient tous les temples du jeu
+     */
+
     private  List<Temple> temples;
+
+    /**
+     * Une liste qui contient tous les cristaux
+     */
 
     private List<Cristal> cristaux;
 
+    /**
+     * Représente le joueur
+     */
+
     private ApprentiOrdonnateur apprentiOrdonnateur;
+
+    /**
+     * Représente la position du joueur
+     */
 
     private Position positionApprenti ;
 
+    /**
+     * Label qui affiche
+     */
     private Label labelToString;
 
+    /**
+     * Nouveau graphique qui affiche le cristal du joueur
+     */
     private GraphicsContext graphicsContextCristal;
+
+    /**
+     * fenetre dans laquel s'affiche les éléments graphiques du cristal
+     */
 
     private Canvas canvaCristal;
 
+    /**
+     * Bouton qui permet d'échanger les cristaux
+     */
+
     private Button boutonEchange;
+
+    /**
+     * Architecture MVC
+     */
 
     private Controleur controleur;
 
-
+    /**
+     * Constructeur de la classe. Permet d'instancier les composants graphiques.
+     * Détermine la position du joueur.
+     * Colorier les cases cliquer
+     */
     public VBoxCanva(){
+
+        //instancie le controleur
         controleur = new Controleur();
+
         //l'étiquette qui affiche le nombre de pas
         labelNombreDePas = new Label ("Nombre de pas : 0");
 
@@ -65,6 +119,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
             }
         }
 
+        //le bouton pour échanger de cristal
         boutonEchange = new Button("Echanger cristaux");
         boutonEchange.setOnAction(controleur);
         this.getChildren().add(boutonEchange);
@@ -100,17 +155,6 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                 positionApprenti.getOrdonnee()*CARRE + 0.5,
                 LARGEUR_OVALE,HAUTEUR_OVALE);
 
-//
-        //// Position pour le toString
-        //Position position = new Position(10,10);
-        //labelToString = new Label(position.toString());
-        //// Affichage du toString
-        //this.getChildren().add(labelToString);
-
-
-
-
-
         // Récupère et affiche la position de la case cliquée avec la souris
         canvasCarte.setOnMouseClicked(event -> {
                     // boolean qui permet de voir si une case est déjà coloriée :
@@ -128,17 +172,13 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                     // si boolean vrai faire le coloriage
                     if (etest) {
                         Position positionClique = new Position(abscisse, ordonne);
-                       //for (Temple temple : temples){
-                       //    if ( positionClique.equals(temple.getPositionTemple())) {
-
-                       //    }
-                       //}
                         System.out.println(positionClique);
-                        //labelToString.setText(position.toString());
 
-                        // Permet de colorier la case cliquée ? fillRect a comme parametre : abscisse, ordonne, longueur, largeur
+                        // Permet de colorier la case cliquée
                         graphicsContext2D.setFill(COULEUR_CLIQUE);
                         coloriee = true;
+
+                        // fillRect a comme parametre : abscisse, ordonne, longueur, largeur
                         graphicsContext2D.fillRect(abscisse * CARRE +1, ordonne * CARRE+1, CARRE-2, CARRE-2);
 
                         this.deplacementAvecTimer(positionApprenti, positionClique);
@@ -151,7 +191,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                 });
 
 
-
+        //afficher le cristal
         Label labelCristal = new Label("Cristal porté : ");
         this.getChildren().add(labelCristal);
         VBox.setMargin(labelCristal,new Insets(10));
@@ -164,23 +204,24 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         graphicsContextCristal.setStroke(COULEUR_GRILLE);
         graphicsContextCristal.strokeRect( 0 , 0 , CARRE*2- 5, CARRE*2-5);
 
-
-
-
         this.getChildren().add(canvaCristal);
         VBox.setMargin(canvaCristal, new Insets(5));
-
-
 
     }
 
 
-
+    /**
+     * Accesseur pour le champ temple
+     * @return temples, les temples du jeu
+     */
     public List<Temple> getTemples() {
         return temples;
     }
 
-
+    /**
+     * La méthode setTemples reçoit en paramètre une liste de temples et les affiches dans le CanvaCarte
+     * @param parTemples, une liste de temple
+     */
     // Méthode pour placer les temples
     public void setTemples(List<Temple> parTemples) {
         this.temples = parTemples;
@@ -194,7 +235,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
 
     /**
-     * Méthode qui prend en parametres une liste de cristal
+     * Méthode qui prend en parametre une liste de cristal
      * pour placer les cristaux graphiquement
      * @param parCristaux Liste de cristaux
      */
@@ -213,20 +254,21 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
     /**
      * Méthode de déplacement avec un Timer.
      * Elle déplace l'apprenti vers la position cible.
-     * !! ENLEVER LA COULEUR QU'IL MET A CHAQUE DEPLACEMENT !!
-     *
+     * Elle reçoit en paramètre la position du joueur et la position du clique
      * @param positionApprenti Position actuelle de l'apprenti.
      * @param positionsCibles  Position cible du déplacement.
      */
     private void deplacementAvecTimer(Position positionApprenti, Position positionsCibles) {
+
+        //Création d'un timer
         Timer timer = new Timer();
         final int [] tabIndice = {0};
 
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                //Position positionCible = positionsCibles.get(tabIndice[0]);
 
+                //Position positionCible = positionsCibles.get(tabIndice[0]);
                 graphicsContext2D.clearRect(positionApprenti.getAbscisse() * CARRE + 1, positionApprenti.getOrdonnee() * CARRE + 1, CARRE - 2, CARRE - 2); // dimensiosn
 
                 if (! (temples == null)) {
@@ -253,6 +295,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                     }
                 }
 
+                //le joueur se déplace case par case
                 positionApprenti.deplacementUneCase(positionsCibles);
 
 
@@ -281,6 +324,10 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         timer.scheduleAtFixedRate(timerTask, 1000, 200);
     }
 
+
+    /**
+     * La méthode échange graphique permet d'afficher graphiquement la récupération d'un cristal
+     */
     public void echangeGraphique(){
         // si l'apprenti a un cristal
         if (!(apprentiOrdonnateur.getCristalPorte() == null)){
@@ -298,12 +345,6 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                         System.out.println(apprentiOrdonnateur.isEchangeDispo());
                         Cristal cristalPorte = apprentiOrdonnateur.getCristalPorte();
 
-                        //graphicsContext2D.setFill(COULEURS_TEMPLES[cristal.getCouleurCristal()]);
-                        //graphicsContext2D.fillOval(cristalPorte.getPositionCristal().getAbscisse() * CARRE ,
-                        //        cristalPorte.getPositionCristal().getOrdonnee() * CARRE,
-                        //        LARGEUR_OVALE,
-                        //        HAUTEUR_OVALE);
-
                         graphicsContextCristal.setFill(COULEURS_TEMPLES[cristalPorte.getCouleurCristal()-1]);
                         graphicsContextCristal.fillOval(3, 3, 30, 30);
                         System.out.println(" Cristal porté" +cristalPorte.toString());
@@ -313,7 +354,6 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
             //apprentiOrdonnateur.lacherCristal();
         }
 
-        // C BON
         //si l'apprenti n'a pas de cristal
         if (apprentiOrdonnateur.getCristalPorte() == null){
             // Parcours de la liste de cristaux
@@ -328,19 +368,22 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
             }
         }
-            //graphicsContextCristal.fillOval();
+
     }
 
     /** Méthode qui ne prend rien en parametre et ne renvoie rien,
-     * elle redessine l'intérieur des cases de la grille
+     * Elle redessine l'intérieur des cases de la grille lorsque qu'on change de scénarios.
      */
     public void effacerCanva(){
+
+        //Redessiner en blanc
         graphicsContext2D.setFill(Paint.valueOf("white"));
         for ( int i = 20; i< LARGEUR_CANVAS; i+= CARRE){
             for ( int j = 20; j < HAUTEUR_CANVAS; j+= CARRE) {
                 graphicsContext2D.fillRect(i +1 , j+1, CARRE - 2, CARRE - 2);
             }
         }
+
         graphicsContext2D.setFill(COULEUR_APPRENTI);
         positionApprenti.setPosition(LARGEUR_CANVAS/(CARRE*2), HAUTEUR_CANVAS/(CARRE*2));
         graphicsContext2D.fillOval(positionApprenti.getAbscisse()*CARRE +0.5,
@@ -349,14 +392,6 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
     }
 
-
-    public String cristauxToString(){
-        String cristales = "";
-        for (Cristal cristal : cristaux){
-            cristales += cristal.toString();
-        }
-        return cristales;
-    }
 }
 
 
