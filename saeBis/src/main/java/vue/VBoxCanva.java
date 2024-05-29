@@ -28,7 +28,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
     private  List<Temple> temples;
 
-    private Collection<Cristal> cristaux;
+    private List<Cristal> cristaux;
 
     private ApprentiOrdonnateur apprentiOrdonnateur;
 
@@ -39,6 +39,10 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
     private GraphicsContext graphicsContextCristal;
 
     private Canvas canvaCristal;
+
+    private Button boutonEchange;
+
+    private Controleur controleur;
 
 
     public VBoxCanva(){
@@ -58,6 +62,11 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                 graphicsContext2D.strokeRect(i,j, CARRE, CARRE);
             }
         }
+
+        boutonEchange = new Button("Echanger cristaux");
+        boutonEchange.setOnAction(controleur);
+        this.getChildren().add(boutonEchange);
+
 
         // ajout des composants graphiques à la racine (this)
         this.getChildren().add(canvasCarte);
@@ -139,6 +148,8 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                     }
                 });
 
+
+
         Label labelCristal = new Label("Cristal porté : ");
         this.getChildren().add(labelCristal);
         VBox.setMargin(labelCristal,new Insets(10));
@@ -152,8 +163,12 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         graphicsContextCristal.strokeRect( 0 , 0 , CARRE*2- 5, CARRE*2-5);
 
 
+
+
         this.getChildren().add(canvaCristal);
-        VBox.setMargin(canvaCristal, new Insets(10));
+        VBox.setMargin(canvaCristal, new Insets(5));
+
+
 
     }
 
@@ -176,14 +191,19 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
     }
 
 
-    // Méthode pour placer les cristaux
+    /**
+     * Méthode qui prend en parametres une liste de cristal
+     * pour placer les cristaux graphiquement
+     * @param parCristaux Liste de cristaux
+     */
+
     public void setCristaux(List<Cristal> parCristaux) {
         this.cristaux = parCristaux ;
         // affichage des temples
         for (Cristal cristal : cristaux) {
-            Position positionCristal = cristal.getPositionCristal();
-            graphicsContext2D.setFill(COULEURS_TEMPLES[cristal.getCouleurCristal()-1]);
-            graphicsContext2D.fillOval(positionCristal.getAbscisse()*CARRE+1,positionCristal.getOrdonnee()*CARRE+1,CARRE-1,CARRE-1);
+                Position positionCristal = cristal.getPositionCristal();
+                graphicsContext2D.setFill(COULEURS_TEMPLES[cristal.getCouleurCristal()-1]);
+                graphicsContext2D.fillOval(positionCristal.getAbscisse()*CARRE+1,positionCristal.getOrdonnee()*CARRE+1,CARRE-1,CARRE-1);
         }
     }
 
@@ -220,19 +240,26 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                     // Test position Cristal
                     for (Cristal cristal : cristaux) {
                         Position positionCristal = cristal.getPositionCristal();
-                        // Si l'apprenti est sur un temple avec un cristal on re-colorie apres son passage
-                        if (positionApprenti.equals(positionCristal)) {
-                            graphicsContext2D.setFill(COULEURS_TEMPLES[cristal.getCouleurCristal() - 1]);
-                            graphicsContext2D.fillOval(positionCristal.getAbscisse() * CARRE + 1, positionCristal.getOrdonnee() * CARRE + 1, CARRE - 1, CARRE - 1);
+                        if (!(cristal.equals(apprentiOrdonnateur.getCristalPorte()))) {
+                            // Si l'apprenti est sur un temple avec un cristal on re-colorie apres son passage
+                            if (positionApprenti.equals(positionCristal)) {
+                                graphicsContext2D.setFill(COULEURS_TEMPLES[cristal.getCouleurCristal() - 1]);
+                                graphicsContext2D.fillOval(positionCristal.getAbscisse() * CARRE + 1, positionCristal.getOrdonnee() * CARRE + 1, CARRE - 1, CARRE - 1);
+                            }
                         }
+
                     }
                 }
+
                 positionApprenti.deplacementUneCase(positionsCibles);
-                System.out.println(cristauxToString());
-                if (!(apprentiOrdonnateur.getCristalPorte()==null)) {
-                    apprentiOrdonnateur.getCristalPorte().setPositionCristal(positionApprenti);
+
+
+                // Actualise la position du cristal en meme temps que l'apprenti
+                if (!(apprentiOrdonnateur.getCristalPorte()== null)) {
+                    apprentiOrdonnateur.getCristalPorte().getPositionCristal().deplacementCristal(positionsCibles);
                 }
 
+                // Dessine l'apprenti
                 graphicsContext2D.setFill(COULEUR_APPRENTI);
                 graphicsContext2D.fillOval(positionApprenti.getAbscisse() * CARRE , positionApprenti.getOrdonnee() * CARRE , LARGEUR_OVALE, HAUTEUR_OVALE);
 
@@ -250,29 +277,44 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
     public void echangeGraphique(){
         if (!(apprentiOrdonnateur.getCristalPorte() == null)){
+            // Le cristal porté avant échange
+            Cristal cristaltemp = apprentiOrdonnateur.getCristalPorte();
+            //Parcours de la liste des cristaux
             for (Cristal cristal : cristaux) {
                 if (apprentiOrdonnateur.getPosition().equals(cristal.getPositionCristal())) {
-                    apprentiOrdonnateur.echangeCristaux(cristal);
-                    Cristal cristalPorte = apprentiOrdonnateur.getCristalPorte();
-                    //graphicsContext2D.setFill(COULEURS_TEMPLES[cristal.getCouleurCristal()]);
-                    //graphicsContext2D.fillOval(cristalPorte.getPositionCristal().getAbscisse() * CARRE ,
-                    //        cristalPorte.getPositionCristal().getOrdonnee() * CARRE,
-                    //        LARGEUR_OVALE,
-                    //        HAUTEUR_OVALE);
-                    graphicsContextCristal.setFill(COULEURS_TEMPLES[cristalPorte.getCouleurCristal()]);
-                    graphicsContextCristal.fillOval(10, 10, LARGEUR_OVALE, HAUTEUR_OVALE);
-                    System.out.println(" Cristal porté" +cristal.toString());
+                    //System.out.println("TEST 1");
+                    // si le cristal testé n'est pas le cristal porté
+                    if ( !(cristaltemp.equals(cristal))) {
+                        System.out.println(apprentiOrdonnateur.isEchangeDispo());
+                        apprentiOrdonnateur.echangeCristaux(cristal);
+                        System.out.println(apprentiOrdonnateur.isEchangeDispo());
+                        Cristal cristalPorte = apprentiOrdonnateur.getCristalPorte();
+
+                        //graphicsContext2D.setFill(COULEURS_TEMPLES[cristal.getCouleurCristal()]);
+                        //graphicsContext2D.fillOval(cristalPorte.getPositionCristal().getAbscisse() * CARRE ,
+                        //        cristalPorte.getPositionCristal().getOrdonnee() * CARRE,
+                        //        LARGEUR_OVALE,
+                        //        HAUTEUR_OVALE);
+
+                        graphicsContextCristal.setFill(COULEURS_TEMPLES[cristalPorte.getCouleurCristal()-1]);
+                        graphicsContextCristal.fillOval(3, 3, 30, 30);
+                        System.out.println(" Cristal porté" +cristalPorte.toString());
+                    }
                 }
             }
         }
-        if(apprentiOrdonnateur.getCristalPorte() == null){
+
+        // C BON
+        //si l'apprenti n'a pas de cristal
+        if (apprentiOrdonnateur.getCristalPorte() == null){
+            // Parcours de la liste de cristaux
             for (Cristal cristalEchange: cristaux) {
-                if(apprentiOrdonnateur.getPosition().equals(cristalEchange.getPositionCristal())) {
-                                apprentiOrdonnateur.ramasseCristaux(cristalEchange);
-                                graphicsContextCristal.clearRect(cristalEchange.getPositionCristal().getAbscisse() * CARRE,
-                                        cristalEchange.getPositionCristal().getOrdonnee() * CARRE,
-                                        LARGEUR_OVALE,
-                                        HAUTEUR_OVALE);
+                // si la position de l'apprenti est égale à celle du cristal de la boucle
+                if (apprentiOrdonnateur.getPosition().equals(cristalEchange.getPositionCristal())) {
+                    // On récupère le cristal
+                    apprentiOrdonnateur.echangeCristaux(cristalEchange);
+                    graphicsContextCristal.setFill(COULEURS_TEMPLES[apprentiOrdonnateur.getCristalPorte().getCouleurCristal()-1]);
+                    graphicsContextCristal.fillOval( 3, 3, 30, 30);
                 }
 
             }
