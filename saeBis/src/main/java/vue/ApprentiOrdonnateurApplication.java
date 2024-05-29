@@ -5,7 +5,15 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * La classe ApprentiOrdonnateurApplication permet de lancer l'application
+ */
 public class ApprentiOrdonnateurApplication extends Application {
+
+    /**
+     * Méthode principale de l'application pour lancer l'interface graphique
+     * @param stage, la fenetre principale de l'application
+     */
     public void start(Stage stage) {
         VBox root = new VBoxRoot();
         Scene scene = new Scene(root,700,580);
