@@ -53,7 +53,11 @@ public class Controleur implements EventHandler {
             if (((Button) event.getSource()).getText().equals("Echanger cristaux")) {
                 VBoxRoot.getCanvas().echangeGraphique();
             }
+            if (((Button) event.getSource()).getText().equals("Déposer cristal")){
+                VBoxRoot.getCanvas().supprimerCristalPorter();
+            }
         }
+
     }
 
 
