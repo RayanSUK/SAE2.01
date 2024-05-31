@@ -64,12 +64,45 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
      * La méthode lacherCristal permet de déposer le cristal porté par l'apprentie à sa position
      */
     public void lacherCristal() {
+        if (cristalPorte == -1){
+            return;
+        }
         for (Cristal cristal : cristaux ) {
-            if (cristal.getPositionCristal().equals(positionApprenti)) {
+            // si le joueur est sur un cristal et que celui-là n'est pas le cristal porter
+            if (cristal.getPositionCristal().equals(positionApprenti) && !(cristal.equals(cristaux.get(cristalPorte)))) {
                 return;
             }
-            cristalPorte = -1;
         }
+        for (Temple temple : temples){
+            if (positionApprenti.equals(temple.getPositionTemple())){
+                cristalPorte = -1;
+            }
+
+        }
+    }
+
+
+    /**
+     * La méthode victoire vérifie si tous les cristaux sont bien mis dans leur temple correspondant
+     * @return True si c'est le cas, False sinon
+     */
+    public boolean victoire(){
+        int compteur = 0;
+        for (Temple temple : temples){
+            for (Cristal cristal :  cristaux){
+                if(cristal.getCouleurCristal() == temple.getCouleurTemple() && cristal.getPositionCristal().equals(temple.getPositionTemple())){
+                    compteur +=1;
+                    System.out.println(compteur);
+
+                }
+            }
+
+        }
+        if(compteur == temples.size()){
+            System.out.println("gg");
+            return true;
+        }
+        return false;
     }
 
     /**
