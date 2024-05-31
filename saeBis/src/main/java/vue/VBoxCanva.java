@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 import modele.*;
 
 import java.util.Collection;
@@ -87,10 +87,23 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
     private Button boutonEchange;
 
     /**
+     * Bouton qui permet de déposer un cristal
+     */
+
+    private Button boutonDepose;
+
+    /**
+     * Label lorsque le joueur gagne
+     */
+    private Label labelVictoire;
+
+    /**
      * Architecture MVC
      */
 
     private Controleur controleur;
+
+
 
     /**
      * Constructeur de la classe. Permet d'instancier les composants graphiques.
@@ -124,12 +137,22 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         boutonEchange.setOnAction(controleur);
         this.getChildren().add(boutonEchange);
 
+        // le bouton pour déposer le cristal
+        boutonDepose = new Button("Déposer cristal");
+        boutonDepose.setOnAction(controleur);
+        this.getChildren().add(boutonDepose);
+
+        //Le bouton de victoire
+        labelVictoire = new Label("Victoire");
+        labelVictoire.setVisible(false);
+        this.getChildren().add(labelVictoire);
+
+
 
         // ajout des composants graphiques à la racine (this)
         this.getChildren().add(canvasCarte);
         VBox.setMargin(canvasCarte, new Insets(10));
         this.getChildren().add(labelNombreDePas);
-        VBox.setMargin(labelNombreDePas, new Insets(5));
 
         // les numéros de colonne
         int numCol = -15;
@@ -167,6 +190,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                     if (abscisse != 0) {
                         if (ordonne != 0) {
                             etest = true;
+
                         }
                     }
                     // si boolean vrai faire le coloriage
@@ -185,7 +209,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
                     }
                     if (!etest) {
-                        labelToString.setText("Case cliquée invalide, veuillez réessayer");
+                        System.out.println("Case cliquée invalide, veuillez réessayer");
 
                     }
                 });
@@ -194,7 +218,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         //afficher le cristal
         Label labelCristal = new Label("Cristal porté : ");
         this.getChildren().add(labelCristal);
-        VBox.setMargin(labelCristal,new Insets(10));
+
 
         // Création d'un canva pour afficher une case qui montre le cristal porté par le joueur
         canvaCristal = new Canvas();
@@ -353,7 +377,6 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
             }
             //apprentiOrdonnateur.lacherCristal();
         }
-
         //si l'apprenti n'a pas de cristal
         if (apprentiOrdonnateur.getCristalPorte() == null){
             // Parcours de la liste de cristaux
@@ -395,8 +418,3 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 }
 
 
-/*
--methode d'échange de cristal
--ne pas effacer quand tu passes sur un temple ou un cristal!!! -> à moitié réglé,
- on doit avoir le choix de prendre ou non le cristal
- */
