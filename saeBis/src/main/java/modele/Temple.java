@@ -52,6 +52,10 @@ public class Temple {
     public Position getPositionTemple() {
         return positionTemple;
     }
+
+    public String toString() {
+        return positionTemple.toString() + " " + couleurTemple;
+    }
 }
 
 
