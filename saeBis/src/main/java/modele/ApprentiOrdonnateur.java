@@ -81,6 +81,20 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         }
     }
 
+    /**
+     * La méthode templeAssocie prend en paramètre un cristal et retourne l'indice du temple de la même couleur
+     * dans la liste de temples.
+     * @param parCristal
+     * @return Indice temple associé
+     */
+    public int templeAssocie(Cristal parCristal) {
+        for (int i = 0; i < cristaux.size(); i++) {
+            if (temples.get(i).getCouleurTemple() == parCristal.getCouleurCristal()) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     /**
      * La méthode victoire vérifie si tous les cristaux sont bien mis dans leur temple correspondant
@@ -104,6 +118,8 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         }
         return false;
     }
+
+    // ACCESSEURS
 
     /**
      * Accesseur au champ temple
