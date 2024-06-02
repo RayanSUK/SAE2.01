@@ -65,7 +65,7 @@ public class Cristal {
      * @return une chaine de caractère
      */
     public String toString() {
-        return getPositionCristal().toString() + " " + getCouleurCristal();
+        return positioncristal.toString() + " " + couleurcristal;
     }
 
 
