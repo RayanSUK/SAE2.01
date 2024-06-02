@@ -12,8 +12,8 @@ import vue.VBoxRoot;
 import java.util.List;
 import java.io.File;
 import java.util.Collection;
-/** Cette classe permet à la vue et au modele d'intéragir ensemble
- * et de gérer les actions de l'utilisateur sur l'interface
+/** Cette classe permet à la vue et au modèle d'intéragir ensemble
+ * et de gérer les actions de l'utilisateur sur l'interface.
  * Il permet également de lire les différents scénarios
  */
 
@@ -56,9 +56,13 @@ public class Controleur implements EventHandler {
             if (((Button) event.getSource()).getText().equals("Déposer cristal")){
                 VBoxRoot.getCanvas().supprimerCristalPorter();
             }
+            if (((Button) event.getSource()).getText().equals("tri par selection")){
+                VBoxRoot.getCanvas().triSelection();
+            }
         }
 
     }
+
 
 
 
