@@ -4,6 +4,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
+import modele.Algorithme;
 import modele.Cristal;
 import modele.LectureScenario;
 import modele.Temple;
@@ -57,7 +58,8 @@ public class Controleur implements EventHandler {
                 VBoxRoot.getCanvas().supprimerCristalPorter();
             }
             if (((Button) event.getSource()).getText().equals("tri par selection")){
-                VBoxRoot.getCanvas().triSelection();
+                Algorithme algo = new Algorithme(VBoxRoot.getApprenti(), VBoxRoot.getApprenti().getCristaux(), VBoxRoot.getApprenti().getTemples());
+                algo.triHeuristique();
             }
         }
 
