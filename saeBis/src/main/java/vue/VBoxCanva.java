@@ -31,7 +31,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
     private Label labelNombreDePas;
     /**
-     * Le champ canvasCarte est une fenetre dans lequel s'affiche les éléments graphiques
+     * Le champ canvasCarte est une fenêtre dans lequel s'affiche les éléments graphiques
      */
 
     private static Canvas canvasCarte;
@@ -66,7 +66,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
     private GraphicsContext graphicsContextCristal;
 
     /**
-     * fenetre dans laquel s'affiche les éléments graphiques du cristal
+     * Fenêtre dans laquelle s'affiche les éléments graphiques du cristal
      */
 
     private Canvas canvaCristal;
@@ -270,7 +270,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
     /**
      * Méthode de déplacement avec un Timer.
      * Elle déplace l'apprenti vers la position cible.
-     * Elle reçoit en paramètre la position du joueur et la position du clique
+     * Elle reçoit en paramètre la position du joueur et la position du clic
      * @param positionApprenti Position actuelle de l'apprenti.
      * @param positionsCibles  Position cible du déplacement.
      */
@@ -353,7 +353,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
             }
         };
         System.out.println("TEST 21");
-        timer.scheduleAtFixedRate(timerTask, 1000, 200);
+        timer.scheduleAtFixedRate(timerTask, 10000, 2000);
         System.out.println("TEST 22");
     }
 
@@ -476,24 +476,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         }
 
     }
-    public void triSelectionSansDeplacement() {
-        //Parcours des cristaux par indice
-        for (int i = 0; i < cristaux.size() - 1; i++) {
-            // Initialisation du minimum à l'indice 0
-            int minIndex = i;
-            for (int j = i + 1; j < cristaux.size(); j++) {
-                if (apprentiOrdonnateur.templeAssocie(cristaux.get(j)) < apprentiOrdonnateur.templeAssocie(cristaux.get(minIndex))) {
-                    minIndex = j;
 
-                }
-            }
-            // Échange des éléments
-            Cristal temp = cristaux.get(minIndex);
-            cristaux.set(minIndex, cristaux.get(i));
-            cristaux.set(i, temp);
-        }
-
-    }
 
 }
 
