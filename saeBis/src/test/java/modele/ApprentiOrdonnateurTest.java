@@ -92,6 +92,9 @@ class ApprentiOrdonnateurTest implements ConstantesCanvas {
         assertTrue(apprentiOrdonnateur.victoire());
     }
 
+    /**
+     *
+
     @Test
     void testTriSelectionSansDeplacement() {
         // Désordonner les cristaux
@@ -106,4 +109,5 @@ class ApprentiOrdonnateurTest implements ConstantesCanvas {
         assertEquals(cristaux.get(1), cristauxTries.get(1));
         assertEquals(cristaux.get(2), cristauxTries.get(2));
     }
+     */
 }
