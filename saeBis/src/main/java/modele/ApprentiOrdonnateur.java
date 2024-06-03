@@ -119,6 +119,26 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         return false;
     }
 
+
+    public void triSelectionSansDeplacement() {
+        //Parcours des cristaux par indice
+        for (int i = 0; i < cristaux.size() - 1; i++) {
+            // Initialisation du minimum à l'indice 0
+            int minIndex = i;
+            for (int j = i + 1; j < cristaux.size(); j++) {
+                if (templeAssocie(cristaux.get(j)) < templeAssocie(cristaux.get(minIndex))) {
+                    minIndex = j;
+
+                }
+            }
+            // Échange des éléments
+            Cristal temp = cristaux.get(minIndex);
+            cristaux.set(minIndex, cristaux.get(i));
+            cristaux.set(i, temp);
+        }
+
+    }
+
     // ACCESSEURS
 
     /**
