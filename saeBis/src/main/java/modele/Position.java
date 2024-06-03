@@ -137,6 +137,14 @@ public class Position {
     }
 
     /**
+     * La méthode resetNombreDePas permet de remettre le compteur à 0.
+     * Nous l'utiliserons pour nos tests unitaires
+     */
+    public static void resetNombreDePas() {
+        nombreDePas = 0;
+    }
+
+    /**
      * Retourne sous forme de texte la position avec son abscisse et son ordonnée
      * @return une chaine de caractère
      */
