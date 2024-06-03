@@ -87,6 +87,12 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
      * Label lorsque le joueur gagne
      */
     private Label labelVictoire;
+    /**
+     * Bouton pour le tri par selection
+     */
+    private Button triInsertion;
+
+    private Timer timer;
 
     /**
      * Architecture MVC
@@ -138,7 +144,10 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         labelVictoire.setVisible(false);
         this.getChildren().add(labelVictoire);
 
-
+        //Le bouton de l'algorithme de tri par Selection
+        triInsertion = new Button("tri par selection");
+        triInsertion.setOnAction(controleur);
+        this.getChildren().add(triInsertion);
 
         // ajout des composants graphiques à la racine (this)
         this.getChildren().add(canvasCarte);
@@ -283,15 +292,11 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("TEST 2");
 
                 graphicsContext2D.clearRect(positionApprenti.getAbscisse() * CARRE + 1, positionApprenti.getOrdonnee() * CARRE + 1, CARRE - 2, CARRE - 2); // dimensiosn
-
-                System.out.println("TEST 3");
                 if (! (temples == null)) {
                     // Test position temple
                     for (Temple temple : temples) {
-                        System.out.println("TEST 4");
                         Position positionTemple = temple.getPositionTemple();
                         // Si l'apprenti est sur un temple on re-colorie apres son passage
                         if (positionApprenti.equals(positionTemple)) {
@@ -341,9 +346,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                 if (positionApprenti.equals(positionsCibles)) {
                     System.out.println("TEST 17");
                     timer.cancel();
-                    System.out.println("TEST 18");
                     if (apprentiOrdonnateur.getCristalPorte()!=null) {
-                        System.out.println("TEST 19");
                         System.out.println("Le cristal porté est :" + apprentiOrdonnateur.getCristalPorte().toString());
                     }
 
@@ -439,22 +442,6 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
     }
 
-    /**
-     * La méthode triInsertion parcours la liste de temple
-     */
-    public void triInsertion() {
-        for (int i = 1; i < cristaux.size(); i++) {
-            Cristal key = cristaux.get(i);
-            int j = i - 1;
-
-            // Utilisation de templeAssocie pour déterminer l'ordre de tri
-            while (j >= 0 && apprentiOrdonnateur.templeAssocie(cristaux.get(j)) > apprentiOrdonnateur.templeAssocie(key)) {
-                cristaux.set(j + 1, cristaux.get(j));
-                j = j - 1;
-            }
-            cristaux.set(j + 1, key);
-        }
-    }
 
     public void triSelection() {
         //Parcours des cristaux par indice
