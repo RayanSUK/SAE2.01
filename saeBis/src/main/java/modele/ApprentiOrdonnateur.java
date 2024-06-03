@@ -96,6 +96,30 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         return -1;
     }
 
+    /**La méthode cristalPlusProche ne prend rien en paramètres et renvoie
+     *  l'indice du cristal le plus proche de l'apprenti ordonnateur.
+     * @return indice cristal le plus proche
+     */
+    public int cristalPlusProche() {
+        int distanceMin = Integer.MAX_VALUE;
+        int indiceCristal = -1;
+
+        for (int i = 0; i < cristaux.size(); i++) {
+            if (cristaux.get(i).getPositionCristal().equals(temples.get(templeAssocie(cristaux.get(i))).getPositionTemple())) {
+                continue;
+            }
+            Position positionCristal = cristaux.get(i).getPositionCristal();
+            int distanceX = Math.abs(positionCristal.getAbscisse() - positionApprenti.getAbscisse());
+            int distanceY = Math.abs(positionCristal.getOrdonnee() - positionApprenti.getOrdonnee());
+            int distance = distanceX + distanceY; // Calcul de la distance manhattan
+            if (distance < distanceMin) {
+                distanceMin = distance;
+                indiceCristal = i;
+            }
+        }
+        return indiceCristal;
+    }
+
     /**
      * La méthode victoire vérifie si tous les cristaux sont bien mis dans leur temple correspondant
      * @return True si c'est le cas, False sinon
@@ -120,32 +144,13 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
     }
 
 
-    public void triSelectionSansDeplacement() {
-        //Parcours des cristaux par indice
-        for (int i = 0; i < cristaux.size() - 1; i++) {
-            // Initialisation du minimum à l'indice 0
-            int minIndex = i;
-            for (int j = i + 1; j < cristaux.size(); j++) {
-                if (templeAssocie(cristaux.get(j)) < templeAssocie(cristaux.get(minIndex))) {
-                    minIndex = j;
-
-                }
-            }
-            // Échange des éléments
-            Cristal temp = cristaux.get(minIndex);
-            cristaux.set(minIndex, cristaux.get(i));
-            cristaux.set(i, temp);
-        }
-
-    }
-
     // ACCESSEURS
 
     /**
      * Accesseur au champ temple
      * @return temples, les temples
      */
-    public Collection<Temple> getTemples() {
+    public List<Temple> getTemples() {
         return temples;
     }
 
