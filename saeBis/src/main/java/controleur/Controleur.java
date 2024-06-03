@@ -58,8 +58,15 @@ public class Controleur implements EventHandler {
                 VBoxRoot.getCanvas().supprimerCristalPorter();
             }
             if (((Button) event.getSource()).getText().equals("tri par selection")){
-                Algorithme algo = new Algorithme(VBoxRoot.getApprenti(), VBoxRoot.getApprenti().getCristaux(), VBoxRoot.getApprenti().getTemples());
-                algo.triHeuristique();
+                try {
+                    VBoxRoot.getCanvas().triHeuristiqueAvecAffichage();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                //Algorithme algo = new Algorithme(VBoxRoot.getApprenti(), VBoxRoot.getApprenti().getCristaux(), VBoxRoot.getApprenti().getTemples());
+                //algo.triHeuristique();
+                System.out.println("La liste des cristaux : " + VBoxRoot.getApprenti().getCristaux().toString());
+                System.out.println("La liste des temples :" + VBoxRoot.getApprenti().getTemples().toString());
             }
         }
 
