@@ -80,6 +80,8 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
             }
 
         }
+        victoire();
+        VBoxGauche.getCanvas().getBoiteBouton().conditionVictoire();
     }
 
     /**
