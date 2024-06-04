@@ -4,15 +4,13 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
-import modele.Algorithme;
 import modele.Cristal;
 import modele.LectureScenario;
 import modele.Temple;
-import vue.VBoxCanva;
-import vue.VBoxRoot;
+import vue.VBoxGauche;
 import java.util.List;
 import java.io.File;
-import java.util.Collection;
+
 /** Cette classe permet à la vue et au modèle d'intéragir ensemble
  * et de gérer les actions de l'utilisateur sur l'interface.
  * Il permet également de lire les différents scénarios
@@ -35,12 +33,12 @@ public class Controleur implements EventHandler {
         if (event.getSource()instanceof MenuItem) {
             if (((MenuItem) event.getSource()).getText().equals("Algorithme Heuristique")) {
                 try {
-                    VBoxRoot.getCanvas().triHeuristiqueAvecAffichage();
+                    VBoxGauche.getCanvas().triHeuristiqueAvecAffichage();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                System.out.println("La liste des cristaux : " + VBoxRoot.getApprenti().getCristaux().toString());
-                System.out.println("La liste des temples :" + VBoxRoot.getApprenti().getTemples().toString());
+                System.out.println("La liste des cristaux : " + VBoxGauche.getApprenti().getCristaux().toString());
+                System.out.println("La liste des temples :" + VBoxGauche.getApprenti().getTemples().toString());
             }
 
             Object userData = ((MenuItem)event.getSource()).getUserData();
@@ -50,22 +48,25 @@ public class Controleur implements EventHandler {
                 File scenario = fichierScenario;
                 List<Temple> temples = LectureScenario.lecture(fichierScenario).getKey();
                 List<Cristal> cristaux = LectureScenario.lecture(fichierScenario).getValue();
-                VBoxRoot.getCanvas().effacerCanva();
-                VBoxRoot.getApprenti().setTemples(temples);
-                VBoxRoot.getCanvas().setTemples(temples);
-                VBoxRoot.getApprenti().setCristaux(cristaux);
-                VBoxRoot.getCanvas().setCristaux(cristaux);
-                System.out.println(VBoxRoot.getApprenti());
+                VBoxGauche.getCanvas().effacerCanva();
+                VBoxGauche.getApprenti().setTemples(temples);
+                VBoxGauche.getCanvas().setTemples(temples);
+                VBoxGauche.getApprenti().setCristaux(cristaux);
+                VBoxGauche.getCanvas().setCristaux(cristaux);
+                System.out.println(VBoxGauche.getApprenti());
             }
         }
 
         // Si l'utilisateur clique sur le bouton échange cristaux
         if (event.getSource()instanceof Button) {
-            if (((Button) event.getSource()).getText().equals("Echanger cristaux")) {
-                VBoxRoot.getCanvas().echangeGraphique();
+            if (((Button) event.getSource()).getText().equals("Échanger les cristaux")) {
+                System.out.println("Bouton echange test");
+                VBoxGauche.getCanvas().echangeGraphique();
             }
             if (((Button) event.getSource()).getText().equals("Déposer cristal")){
-                VBoxRoot.getCanvas().supprimerCristalPorter();
+                System.out.println("bouton déposer");
+                VBoxGauche.getApprenti().lacherCristal();
+                VBoxGauche.getCanvas().supprimerCristalPorter();
             }
             //if (((Button) event.getSource()).getText().equals("tri par selection")){
             //    try {
