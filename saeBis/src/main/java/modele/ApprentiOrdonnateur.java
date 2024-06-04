@@ -1,13 +1,14 @@
 package modele;
 
-import java.util.Collection;
+import vue.VBoxCanva;
+import vue.VBoxGauche;
+
 import java.util.List;
-@SuppressWarnings("ResultOfMethodCallIgnored")
 
 /**
- * La classe ApprentiOrdonnateur représente le joueur qui se déplace sur une grille.
- * Il échange des cristaux et interagit avec des temples.
- * Elle implémente l'interface ConstantesCanvas pour accéder aux dimensions et couleurs définies.
+ *  La classe ApprentiOrdonnateur représente le joueur qui se déplace sur une grille.
+ *  Il échange des cristaux et interagit avec des temples.
+ *  Elle implémente l'interface ConstantesCanvas pour accéder aux dimensions et couleurs définies.
  */
 public class ApprentiOrdonnateur implements ConstantesCanvas {
 
@@ -137,7 +138,7 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
 
         }
         if(compteur == temples.size()){
-            System.out.println("gg");
+            System.out.println("Vous avez gagnée");
             return true;
         }
         return false;
