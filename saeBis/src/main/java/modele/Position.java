@@ -7,7 +7,7 @@ public class Position {
     /**
      * Compteur du nombre de pas
      */
-    private static int nombreDePas = 0;
+    private int nombreDePas = 0;
     /**
      * La position en abscisse
      */
@@ -105,7 +105,7 @@ public class Position {
      * Accesseur au champ nombreDePas
      * @return nombreDePas, le nombre de pas du joueur
      */
-    public static int getNombreDePas(){
+    public int getNombreDePas(){
         return nombreDePas;
     }
 
