@@ -15,7 +15,7 @@ public class ApprentiOrdonnateurApplication extends Application {
      * @param stage, la fenetre principale de l'application
      */
     public void start(Stage stage) {
-        VBox root = new VBoxRoot();
+        HBoxRoot root = new HBoxRoot();
         Scene scene = new Scene(root,700,580);
         stage.setScene(scene);
         stage.setTitle("PROJETSAE");
