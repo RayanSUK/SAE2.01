@@ -62,7 +62,7 @@ public interface ConstantesCanvas {
     /**
      * Noms des options de menu pour le choix des scénarios.
      */
-    final String [] INTITULE_MENU_SCENARIOS = {"Choix du scénario"};
+    final String [] INTITULE_MENU_SCENARIOS = {"Choix du scénario", "Choix de l'algorithme"};
 
 
 }
