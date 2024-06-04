@@ -46,7 +46,7 @@ public class HBoxBouton extends HBox {
     }
 
     public void conditionVictoire(){
-        labelVictoire.setVisible(VBoxRoot.getApprenti().victoire());
+        labelVictoire.setVisible(VBoxGauche.getApprenti().victoire());
     }
 
     public Button getBoutonDeposer() {
