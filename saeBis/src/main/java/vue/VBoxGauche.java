@@ -15,7 +15,7 @@ import java.io.File;
  * La classe VBoxRoot est la racine de la vue de l'application.
  *  Elle organise les différents composants de l'interface
  */
-public class VBoxRoot extends VBox implements ConstantesCanvas {
+public class VBoxGauche extends VBox implements ConstantesCanvas {
     /**
      * Représente le joueur
      */
@@ -32,10 +32,11 @@ public class VBoxRoot extends VBox implements ConstantesCanvas {
     private static VBoxCanva canva;
 
 
+
     /**
      * Constructeur de la classe pour initialiser les composants de l'interface et les ajoutées.
      */
-    public VBoxRoot() {
+    public VBoxGauche() {
 
         // instancie les composantes
         apprenti = new ApprentiOrdonnateur();
@@ -65,7 +66,15 @@ public class VBoxRoot extends VBox implements ConstantesCanvas {
 
         // ajout
         this.getChildren().add(menuBar);
+
+        Menu menuAlgo = new Menu(INTITULE_MENU_SCENARIOS[1]);
+        menuBar.getMenus().add(menuAlgo);
+        MenuItem itemAlgoHeuristique = new MenuItem("Algorithme Heuristique");
+        itemAlgoHeuristique.setOnAction(controleur);
+        menuAlgo.getItems().add(itemAlgoHeuristique);
         this.getChildren().add(canva);
+
+
 
     }
 
