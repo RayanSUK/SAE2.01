@@ -412,6 +412,24 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
     }
 
+    public void effacerCanva2(){
+
+        //Redessiner en blanc
+       // try {
+       //     Thread.sleep(140); // Adjust the sleep duration as needed
+       // } catch (InterruptedException e) {
+       //     e.printStackTrace();
+       // }
+        graphicsContext2D.setFill(Color.WHITE);
+        for ( int i = 20; i< LARGEUR_CANVAS; i+= CARRE){
+            for ( int j = 20; j < HAUTEUR_CANVAS; j+= CARRE) {
+                graphicsContext2D.fillRect(i +1 , j+1, CARRE - 2, CARRE - 2);
+            }
+        }
+
+    }
+
+
 
     public void triSelection(Position positionApprenti) {
         System.out.println(cristaux.toString());
@@ -493,62 +511,69 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
     // TRI HEURISTIQUE GRAPHIQUE !!!!!
 
     public void deplacementGraphique(Position parPosition) {
-        Runnable task = () -> {
-            if (positionApprenti.equals(parPosition)) {
-                stopScheduler();
-                return;
+        //Task<Void> task = new Task() {
+        //@Override
+        //protected Void call() throws Exception {
+        //code
+        while (!(positionApprenti.equals(parPosition))) {
+            // Pause pour rendre le déplacement visible
+
+            graphicsContext2D.clearRect(positionApprenti.getAbscisse() * CARRE + 1, positionApprenti.getOrdonnee() * CARRE + 1, CARRE - 2, CARRE - 2);
+
+            if (! (temples == null)) {
+                // Test position temple
+                for (Temple temple : temples) {
+                    Position positionTemple = temple.getPositionTemple();
+                    // Si l'apprenti est sur un temple on re-colorie apres son passage
+                    if (positionApprenti.equals(positionTemple)) {
+                        graphicsContext2D.setFill(COULEURS_TEMPLES[temple.getCouleurTemple() - 1]);
+                        graphicsContext2D.fillRect(positionTemple.getAbscisse() * CARRE + 1, positionTemple.getOrdonnee() * CARRE + 1, CARRE - 1, CARRE - 1);
+                    }
+                }
+                // Test position Cristal
+                for (Cristal cristal : cristaux) {
+                    Position positionCristal = cristal.getPositionCristal();
+                    if (!(cristal.equals(apprentiOrdonnateur.getCristalPorte()))) {
+                        // Si l'apprenti est sur un temple avec un cristal, on re-colorie apres son passage
+                        if (positionApprenti.equals(positionCristal)) {
+                            graphicsContext2D.setFill(COULEURS_TEMPLES[cristal.getCouleurCristal() - 1]);
+                            graphicsContext2D.fillOval(positionCristal.getAbscisse() * CARRE + 1, positionCristal.getOrdonnee() * CARRE + 1, CARRE - 1, CARRE - 1);
+                        }
+                    }
+                }
             }
 
+
+            positionApprenti.deplacementUneCase(parPosition);
+
             // Pause pour rendre le déplacement visible
-            Platform.runLater(() -> {
-                // Effacer la position actuelle de l'apprenti
-                graphicsContext2D.clearRect(positionApprenti.getAbscisse() * CARRE + 1, positionApprenti.getOrdonnee() * CARRE + 1, CARRE - 2, CARRE - 2);
 
-                if (temples != null) {
-                    // Test position temple
-                    for (Temple temple : temples) {
-                        Position positionTemple = temple.getPositionTemple();
-                        // Si l'apprenti est sur un temple on re-colorie après son passage
-                        if (positionApprenti.equals(positionTemple)) {
-                            graphicsContext2D.setFill(COULEURS_TEMPLES[temple.getCouleurTemple() - 1]);
-                            graphicsContext2D.fillRect(positionTemple.getAbscisse() * CARRE + 1, positionTemple.getOrdonnee() * CARRE + 1, CARRE - 1, CARRE - 1);
-                        }
-                    }
-                    // Test position Cristal
-                    for (Cristal cristal : cristaux) {
-                        Position positionCristal = cristal.getPositionCristal();
-                        if (!cristal.equals(apprentiOrdonnateur.getCristalPorte())) {
-                            // Si l'apprenti est sur un temple avec un cristal, on re-colorie après son passage
-                            if (positionApprenti.equals(positionCristal)) {
-                                graphicsContext2D.setFill(COULEURS_TEMPLES[cristal.getCouleurCristal() - 1]);
-                                graphicsContext2D.fillOval(positionCristal.getAbscisse() * CARRE + 1, positionCristal.getOrdonnee() * CARRE + 1, CARRE - 1, CARRE - 1);
-                            }
-                        }
-                    }
-                }
+            // Actualise la position du cristal en meme temps que l'apprenti
+            if (!(apprentiOrdonnateur.getCristalPorte()== null)) {
+                apprentiOrdonnateur.getCristalPorte().getPositionCristal().deplacementCristal(parPosition);
+            }
 
-                positionApprenti.deplacementUneCase(parPosition);
 
-                // Actualise la position du cristal en même temps que l'apprenti
-                if (apprentiOrdonnateur.getCristalPorte() != null) {
-                    apprentiOrdonnateur.getCristalPorte().getPositionCristal().deplacementCristal(parPosition);
-                }
+            //// Pause pour rendre le déplacement visible
+            //try {
+            //    Thread.sleep(80); // Adjust the sleep duration as needed
+            //} catch (InterruptedException e) {
+            //    e.printStackTrace();
+            //}
+            // Dessine l'apprenti
+            graphicsContext2D.setFill(COULEUR_APPRENTI);
+            graphicsContext2D.fillOval(positionApprenti.getAbscisse() * CARRE , positionApprenti.getOrdonnee() * CARRE , LARGEUR_OVALE, HAUTEUR_OVALE);
+            Platform.runLater(() -> labelNombreDePas.setText("Nombre de pas : " + positionApprenti.getNombreDePas()));
 
-                // Dessine l'apprenti
-                graphicsContext2D.setFill(COULEUR_APPRENTI);
-                graphicsContext2D.fillOval(positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_OVALE, HAUTEUR_OVALE);
-                labelNombreDePas.setText("Nombre de pas : " + positionApprenti.getNombreDePas());
-            });
-        };
-
-        scheduler.scheduleAtFixedRate(task, 0, 80, TimeUnit.MILLISECONDS);
-    }
-
-    public void stopScheduler() {
-        if (scheduler != null && !scheduler.isShutdown()) {
-            scheduler.shutdown();
+            //// Pause pour rendre le déplacement visible
+            //try {
+            //    Thread.sleep(80); // Adjust the sleep duration as needed
+            //} catch (InterruptedException e) {
+            //    e.printStackTrace();
+            //}
         }
     }
+
 
     public void triHeuristiqueAvecAffichage() throws InterruptedException {
         Position positionApprenti = apprentiOrdonnateur.getPosition();
@@ -566,11 +591,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
             // Echange avec le cristal.
             System.out.println(positionApprenti.toString());
             System.out.println(cristalProche.toString());
-            try {
-                Thread.sleep(2000); // Adjust the sleep duration as needed
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
             System.out.println(positionApprenti.toString());
             apprentiOrdonnateur.setEchangeDispo();
             apprentiOrdonnateur.echangeCristaux(cristalProche);
@@ -586,6 +607,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
                 apprentiOrdonnateur.getCristalPorte().getPositionCristal().deplacementUneCase(templeAssocie.getPositionTemple());
             }
+
             //}
             // Si le cristal n'est pas le dernier, l'apprenti ordonnateur échange les cristaux.
             if ( i != temples.size()-1) {
