@@ -140,7 +140,7 @@ public class Position {
      * La méthode resetNombreDePas permet de remettre le compteur à 0.
      * Nous l'utiliserons pour nos tests unitaires
      */
-    public static void resetNombreDePas() {
+    public void resetNombreDePas() {
         nombreDePas = 0;
     }
 
