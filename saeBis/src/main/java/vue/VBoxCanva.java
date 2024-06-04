@@ -8,12 +8,19 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import modele.*;
+
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * La classe VboxCanva implémente tous les composants graphiques
@@ -71,22 +78,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
     private Canvas canvaCristal;
 
-    /**
-     * Bouton qui permet d'échanger les cristaux
-     */
 
-    private Button boutonEchange;
-
-    /**
-     * Bouton qui permet de déposer un cristal
-     */
-
-    private Button boutonDepose;
-
-    /**
-     * Label lorsque le joueur gagne
-     */
-    private Label labelVictoire;
     /**
      * Bouton pour le tri par selection
      */
@@ -94,17 +86,16 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
     private Timer timer;
 
-    private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
     private Button triInsertion;
+
+
+
 
     /**
      * Architecture MVC
      */
 
     private Controleur controleur;
-
-
 
     /**
      * Constructeur de la classe. Permet d'instancier les composants graphiques.
@@ -133,20 +124,6 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
             }
         }
 
-        //le bouton pour échanger de cristal
-        boutonEchange = new Button("Echanger cristaux");
-        boutonEchange.setOnAction(controleur);
-        this.getChildren().add(boutonEchange);
-
-        // le bouton pour déposer le cristal
-        boutonDepose = new Button("Déposer cristal");
-        boutonDepose.setOnAction(controleur);
-        this.getChildren().add(boutonDepose);
-
-        //Le bouton de victoire
-        labelVictoire = new Label("Victoire");
-        labelVictoire.setVisible(false);
-        this.getChildren().add(labelVictoire);
 
         //Le bouton de l'algorithme de tri par Selection
         boiteBouton = new HBoxBouton(controleur);
@@ -154,6 +131,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
         triInsertion = new Button("tri par selection");
         triInsertion.setOnAction(controleur);
+
 
 
 
@@ -179,7 +157,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         }
 
         //position apprenti et affichage
-        apprentiOrdonnateur = VBoxRoot.getApprenti();
+        apprentiOrdonnateur = VBoxGauche.getApprenti();
         positionApprenti = apprentiOrdonnateur.getPosition();
         graphicsContext2D.setFill(COULEUR_APPRENTI);
         graphicsContext2D.fillOval(positionApprenti.getAbscisse()*CARRE +0.5,
@@ -239,8 +217,8 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         this.getChildren().add(canvaCristal);
         VBox.setMargin(canvaCristal, new Insets(5));
 
-
     }
+
 
 
     /**
@@ -339,7 +317,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
                 // Dessine l'apprenti
                 graphicsContext2D.setFill(COULEUR_APPRENTI);
                 graphicsContext2D.fillOval(positionApprenti.getAbscisse() * CARRE , positionApprenti.getOrdonnee() * CARRE , LARGEUR_OVALE, HAUTEUR_OVALE);
-                Platform.runLater(() -> labelNombreDePas.setText("Nombre de pas : " + Position.getNombreDePas()));
+                Platform.runLater(() -> labelNombreDePas.setText("Nombre de pas : " + positionApprenti.getNombreDePas()));
 
                 if (positionApprenti.equals(positionsCibles)) {
                     timer.cancel();
@@ -579,10 +557,11 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
             if ( apprentiOrdonnateur.cristalPlusProche() == -1){ return; }
             Cristal cristalProche = cristaux.get(apprentiOrdonnateur.cristalPlusProche());
             // Déplacement vers le cristal le plus proche.
-            //while (!(positionApprenti.equals(cristalProche.getPositionCristal()))) {
+            // while (!(positionApprenti.equals(cristalProche.getPositionCristal()))) {
 
-            deplacementGraphique(cristalProche.getPositionCristal());
-            // Pause pour rendre le déplacement visible
+            deplacementGraphique2(cristalProche.getPositionCristal());
+            //deplacementGraphique(cristalProche.getPositionCristal());
+            // ;
             //}
             // Echange avec le cristal.
             System.out.println(positionApprenti.toString());
@@ -601,14 +580,8 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
             //Déplacement vers le temple associé.
             //while (!(positionApprenti.equals(templeAssocie.getPositionTemple()))) {
 
-            deplacementGraphique(templeAssocie.getPositionTemple());
-
-            try {
-                Thread.sleep(2000); // Adjust the sleep duration as needed
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+            deplacementGraphique2(templeAssocie.getPositionTemple());
+            //deplacementGraphique(templeAssocie.getPositionTemple());
             if (apprentiOrdonnateur.getCristalPorte() != null) {
 
                 apprentiOrdonnateur.getCristalPorte().getPositionCristal().deplacementUneCase(templeAssocie.getPositionTemple());
@@ -626,6 +599,57 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         apprentiOrdonnateur.victoire();
         boiteBouton.conditionVictoire();
     }
+
+    public void updateCanva() {
+       // try {
+       //     Thread.sleep(140); // Adjust the sleep duration as needed
+       // } catch (InterruptedException e) {
+       //     e.printStackTrace();
+       // }
+        effacerCanva2();
+       //}
+
+        setTemples(temples);
+        setCristaux(cristaux);
+
+        graphicsContext2D.setFill(COULEUR_APPRENTI);
+        graphicsContext2D.fillOval(positionApprenti.getAbscisse()*CARRE +0.5,
+                positionApprenti.getOrdonnee()*CARRE + 0.5,
+                LARGEUR_OVALE,HAUTEUR_OVALE);
+
+
+    }
+
+   public void testDeplacement(Position parPosition) {
+       while (!(apprentiOrdonnateur.getPosition().equals(parPosition))) {
+           System.out.println(apprentiOrdonnateur.getPosition().toString());
+           System.out.println(parPosition.toString());
+           apprentiOrdonnateur.getPosition().deplacementUneCase(parPosition);
+           System.out.println("Pos apres deplacement : " + apprentiOrdonnateur.getPosition().toString());
+           //if (apprentiOrdonnateur.getCristalPorte() !=null) {
+           //    apprentiOrdonnateur.getCristalPorte().getPositionCristal().deplacementCristal(apprentiOrdonnateur.getPosition());
+           //}
+           updateCanva();
+       }
+   }
+
+    public void deplacementGraphique2(Position parPosition) {
+        while (!(positionApprenti.equals(parPosition))) {
+            positionApprenti.deplacementUneCase(parPosition);
+            // Actualise la position du cristal en meme temps que l'apprenti
+            if (!(apprentiOrdonnateur.getCristalPorte()== null)) {
+                apprentiOrdonnateur.getCristalPorte().getPositionCristal().deplacementCristal(parPosition);
+            }
+            updateCanva();
+
+        }
+    }
+
+    public  HBoxBouton getBoiteBouton(){
+        return boiteBouton;
+    }
+
+
 
 
 }
