@@ -33,6 +33,16 @@ public class Controleur implements EventHandler {
 
         // Si l'utilisateur clique sur le menu de scénarios
         if (event.getSource()instanceof MenuItem) {
+            if (((MenuItem) event.getSource()).getText().equals("Algorithme Heuristique")) {
+                try {
+                    VBoxRoot.getCanvas().triHeuristiqueAvecAffichage();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println("La liste des cristaux : " + VBoxRoot.getApprenti().getCristaux().toString());
+                System.out.println("La liste des temples :" + VBoxRoot.getApprenti().getTemples().toString());
+            }
+
             Object userData = ((MenuItem)event.getSource()).getUserData();
             if (userData instanceof File) { //l'utilisateur a choisi un scénario
                 File fichierScenario = (File) userData;
@@ -57,17 +67,17 @@ public class Controleur implements EventHandler {
             if (((Button) event.getSource()).getText().equals("Déposer cristal")){
                 VBoxRoot.getCanvas().supprimerCristalPorter();
             }
-            if (((Button) event.getSource()).getText().equals("tri par selection")){
-                try {
-                    VBoxRoot.getCanvas().triHeuristiqueAvecAffichage();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                //Algorithme algo = new Algorithme(VBoxRoot.getApprenti(), VBoxRoot.getApprenti().getCristaux(), VBoxRoot.getApprenti().getTemples());
-                //algo.triHeuristique();
-                System.out.println("La liste des cristaux : " + VBoxRoot.getApprenti().getCristaux().toString());
-                System.out.println("La liste des temples :" + VBoxRoot.getApprenti().getTemples().toString());
-            }
+            //if (((Button) event.getSource()).getText().equals("tri par selection")){
+            //    try {
+            //        VBoxRoot.getCanvas().triHeuristiqueAvecAffichage();
+            //    } catch (InterruptedException e) {
+            //        throw new RuntimeException(e);
+            //    }
+            //    // Algorithme algo = new Algorithme(VBoxRoot.getApprenti(), VBoxRoot.getApprenti().getCristaux(), VBoxRoot.getApprenti().getTemples());
+            //    // algo.triHeuristique();
+            //    System.out.println("La liste des cristaux : " + VBoxRoot.getApprenti().getCristaux().toString());
+            //    System.out.println("La liste des temples :" + VBoxRoot.getApprenti().getTemples().toString());
+
         }
 
     }
