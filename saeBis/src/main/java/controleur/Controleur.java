@@ -15,8 +15,6 @@ import java.io.File;
  * et de gérer les actions de l'utilisateur sur l'interface.
  * Il permet également de lire les différents scénarios
  */
-
-
 public class Controleur implements EventHandler {
 
     /**
@@ -57,7 +55,7 @@ public class Controleur implements EventHandler {
             }
         }
 
-        // Si l'utilisateur clique sur le bouton échange cristaux
+        // Si l'utilisateur clique sur les boutons
         if (event.getSource()instanceof Button) {
             if (((Button) event.getSource()).getText().equals("Échanger les cristaux")) {
                 System.out.println("Bouton echange test");
@@ -68,16 +66,12 @@ public class Controleur implements EventHandler {
                 VBoxGauche.getApprenti().lacherCristal();
                 VBoxGauche.getCanvas().supprimerCristalPorter();
             }
-            //if (((Button) event.getSource()).getText().equals("tri par selection")){
-            //    try {
-            //        VBoxRoot.getCanvas().triHeuristiqueAvecAffichage();
-            //    } catch (InterruptedException e) {
-            //        throw new RuntimeException(e);
-            //    }
-            //    // Algorithme algo = new Algorithme(VBoxRoot.getApprenti(), VBoxRoot.getApprenti().getCristaux(), VBoxRoot.getApprenti().getTemples());
-            //    // algo.triHeuristique();
-            //    System.out.println("La liste des cristaux : " + VBoxRoot.getApprenti().getCristaux().toString());
-            //    System.out.println("La liste des temples :" + VBoxRoot.getApprenti().getTemples().toString());
+
+            if (((Button) event.getSource()).getText().equals("Réinitialiser")) {
+                VBoxGauche.getCanvas().recommencerPartie();
+                VBoxGauche.getApprenti().recommencerPartie();
+
+            }
 
         }
 
