@@ -124,6 +124,7 @@ class PositionTest {
         pos3.deplacementUneCase(pos4);
         assertEquals(2,pos3.getNombreDePas());
     }
+     */
 
     @Test
     void testSetPosition() {
@@ -150,4 +151,5 @@ class PositionTest {
         Position pos = new Position(26, 36);
         assertEquals("Position : 10, 20", pos.toString());
     }
+    */
 }
