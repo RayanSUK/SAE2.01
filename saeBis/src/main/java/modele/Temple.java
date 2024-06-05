@@ -5,7 +5,7 @@ package modele;
  */
 public class Temple {
     /**
-     * La position du temple, en final car elle est fixe
+     * La position du temple, en final, car elle est fixe
      */
     private final Position positionTemple;
 
@@ -28,7 +28,7 @@ public class Temple {
     //création des accesseurs et des setters
 
     /**
-     * Acceseur au champ temple
+     * Accesseur au champ temple
      * @return couleurTemple, les couleurs des temples
      */
     public int getCouleurTemple() {
@@ -37,7 +37,6 @@ public class Temple {
 
     /**
      * Modifie la couleur des temples
-     * @return couleurTemple, les couleurs des temples
      */
     public void setCouleurTemple(int couleurTemple) {
         this.couleurTemple = couleurTemple;
@@ -56,7 +55,7 @@ public class Temple {
      * @return une chaine de caractère
      */
     public String toString() {
-        return positionTemple.toString() + " " + couleurTemple;
+        return positionTemple.toString() + " de couleur " + couleurTemple;
     }
 }
 
