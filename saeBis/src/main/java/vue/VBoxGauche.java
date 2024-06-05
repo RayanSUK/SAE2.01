@@ -50,12 +50,12 @@ public class VBoxGauche extends VBox implements ConstantesCanvas {
 
 
         //Le menus des scénarios
-        Menu menuScenarios = new Menu(INTITULE_MENU_SCENARIOS[0]);
+        Menu menuScenarios = new Menu(INTITULE_MENU_ITEMS[0]);
         menuBar.getMenus().add(menuScenarios);
 
+        File scenariosDir = new File("scenarios");
         //Les items du menu scénarios
-        File[] scenarios = new File("C:\\Users\\sukka\\Desktop\\COURS\\S2\\JAVA\\DEV_J\\IntelliJ_projets_IHM" +
-                "\\IHM\\SAE2.01\\saeBis\\scenarios").listFiles();
+        File[] scenarios = scenariosDir.listFiles(); //lire fichier
         for (int i = 0 ; i < scenarios.length; i ++){
             MenuItem menuItem = new MenuItem(scenarios[i].getName());
             menuItem.setUserData(scenarios[i]);
@@ -66,13 +66,16 @@ public class VBoxGauche extends VBox implements ConstantesCanvas {
         // ajout
         this.getChildren().add(menuBar);
 
-        Menu menuAlgo = new Menu(INTITULE_MENU_SCENARIOS[1]);
+        Menu menuAlgo = new Menu(INTITULE_MENU_ITEMS[1]);
         menuBar.getMenus().add(menuAlgo);
+        MenuItem itemAlgoTriSelection = new MenuItem("Algorithme de tri par sélection");
         MenuItem itemAlgoHeuristique = new MenuItem("Algorithme Heuristique");
+        itemAlgoTriSelection.setOnAction(controleur);
         itemAlgoHeuristique.setOnAction(controleur);
-        menuAlgo.getItems().add(itemAlgoHeuristique);
+        menuAlgo.getItems().addAll(itemAlgoTriSelection, itemAlgoHeuristique);
         this.getChildren().add(canva);
     }
+
 
     /**
      * Accesseur au champ apprenti
@@ -83,16 +86,16 @@ public class VBoxGauche extends VBox implements ConstantesCanvas {
     }
 
     /**
-     * Accesseur au champ canva
-     * @return canva, la carte
+     * Accesseur au champ canvas
+     * @return canvas, la carte
      */
     public static VBoxCanva getCanvas() {
         return canva;
     }
 
     /**
-     * Accesseur au champ controleur
-     * @return controleur
+     * Accesseur au champ contrôleur
+     * @return contrôleur
      */
     public static Controleur getControleur(){
         return controleur;
