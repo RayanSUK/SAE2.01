@@ -313,6 +313,13 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
 
     }
 
+    public void afficheCristalPorte() {
+        if (!(apprentiOrdonnateur.getCristalPorte() ==null )) {
+            graphicsContextCristal.setFill(COULEURS_TEMPLES[apprentiOrdonnateur.getCristalPorte().getCouleurCristal() - 1]);
+            graphicsContextCristal.fillOval(3, 3, 30, 30);
+        }
+    }
+
     /**
      * La méthode supprimerCristalPorter lâche le cristal puis le supprime graphiquement après vérification.
      */
@@ -379,65 +386,6 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
      * en affichant les déplacements de l'apprenti ordonnateur
      */
     public void triSelection() {
-        System.out.println(cristaux.toString());
-        int n = cristaux.size();
-        for (int i = 0; i < n - 1; i++) {
-            // Initialisation du minimum à l'indice i
-            int minIndex = i;
-            for (int j = i + 1; j < n; j++) {
-                if (apprentiOrdonnateur.templeAssocie(cristaux.get(j)) < apprentiOrdonnateur.templeAssocie(cristaux.get(minIndex))) {
-                    minIndex = j;
-                }
-            }
-
-            // Déplacement de l'apprenti vers le cristal à l'indice minIndex
-            Position positionCristalMini = cristaux.get(minIndex).getPositionCristal();
-            deplacementGraphique(positionCristalMini);
-            // Echange du cristal porté par l'apprenti avec le cristal à l'indice minIndex
-            apprentiOrdonnateur.echangeCristaux(cristaux.get(minIndex));
-            Temple templeCorrespondant = temples.get(apprentiOrdonnateur.templeAssocie(apprentiOrdonnateur.getCristalPorte()));
-            deplacementGraphique(templeCorrespondant.getPositionTemple());
-            //apprentiOrdonnateur.echangeCristaux();
-
-            // Déplacement de l'apprenti vers le cristal à l'indice i
-            Position positionCristalI = cristaux.get(i).getPositionCristal();
-            deplacementGraphique(positionCristalI);
-            // Echange du cristal porté par l'apprenti avec le cristal à l'indice i
-            apprentiOrdonnateur.echangeCristaux(cristaux.get(i));
-
-            // Échange des cristaux dans la liste
-            Cristal temp = cristaux.get(minIndex);
-            cristaux.set(minIndex, cristaux.get(i));
-            cristaux.set(i, temp);
-
-            // Affichage pour débogage
-            System.out.println("État actuel des cristaux : " + cristaux);
-        }
-        System.out.println();
-        System.out.println("fin boucle");
-        System.out.println("Cristal porté :" + apprentiOrdonnateur.getCristalPorte());
-        System.out.println(cristaux.toString());
-
-        // // Gestion du dernier cristal
-        // Position positionCristalLast = temples.get(0).getPositionTemple();
-        // while (!positionApprenti.equals(positionCristalLast)) {
-        //     positionApprenti.deplacementUneCase(positionCristalLast);
-        //     if (apprentiOrdonnateur.getCristalPorte() != null) {
-        //         apprentiOrdonnateur.getCristalPorte().getPositionCristal().deplacementCristal(positionApprenti);
-        //     }
-        //     System.out.println("Apprenti : " + positionApprenti + " | Cristal Last : " + positionCristalLast);
-        // }
-        // System.out.println(cristaux.toString());
-//
-        // // Echange du cristal porté par l'apprenti avec le dernier cristal
-        // apprentiOrdonnateur.lacherCristal();
-        // System.out.println("Echange avec dernier cristal : " + apprentiOrdonnateur.getCristalPorte());
-//
-        // // Vérification finale de la liste des cristaux
-        // System.out.println("Liste finale des cristaux : " + cristaux);
-    }
-
-    public void triSelection2() {
         // Recherche du cristal avec la couleur minimale une seule fois
         Cristal cristalMin = trouverCristalMinCouleur();
 
@@ -487,9 +435,6 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         }
         return null;
     }
-
-
-
 
 
     private Cristal trouverCristalMinCouleur() {
@@ -571,6 +516,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas {
         graphicsContext2D.fillOval(positionApprenti.getAbscisse()*CARRE +0.5,
                 positionApprenti.getOrdonnee()*CARRE + 0.5,
                 LARGEUR_OVALE,HAUTEUR_OVALE);
+        afficheCristalPorte();
         Platform.runLater(() -> labelNombreDePas.setText("Nombre de pas : " + positionApprenti.getNombreDePas()));
 
 
