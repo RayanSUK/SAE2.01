@@ -40,6 +40,10 @@ class TempleTest {
         assertEquals(position, temple.getPositionTemple());
     }
 
+
+    /**
+     *
+
     @Test
     void testToString() {
         assertEquals("Position : -6, 4 1", temple.toString());
