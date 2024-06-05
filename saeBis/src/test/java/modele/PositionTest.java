@@ -105,6 +105,10 @@ class PositionTest {
         assertFalse(position1.equals(new Position(-10, -20)));
     }
 
+
+    /**
+     *
+
     @Test
     void testGetNombreDePas() {
         Position.resetNombreDePas();
@@ -145,6 +149,10 @@ class PositionTest {
         assertEquals(0, position1.getOrdonnee());
 
     }
+
+
+    /**
+     *
 
     @Test
     void testToString() {
