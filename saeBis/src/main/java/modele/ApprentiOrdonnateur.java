@@ -133,8 +133,6 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
             for (Cristal cristal :  cristaux){
                 if(cristal.getCouleurCristal() == temple.getCouleurTemple() && cristal.getPositionCristal().equals(temple.getPositionTemple())){
                     compteur +=1;
-                    System.out.println(compteur);
-
                 }
             }
 
@@ -221,5 +219,9 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
      */
     public void setEchangeDispo() {
         echangeDispo = true;
+    }
+
+    public void resetCristalPorte(){
+        cristalPorte = -1;
     }
 }
