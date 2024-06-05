@@ -48,4 +48,5 @@ class TempleTest {
         assertEquals("Position : -6, 4 2", temple.toString());
 
     }
+     */
 }
