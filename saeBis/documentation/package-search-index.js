@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"org.example.saebis","l":"controleur"},{"m":"org.example.saebis","l":"modele"},{"m":"org.example.saebis","l":"org.example.saebis"},{"m":"org.example.saebis","l":"vue"}];updateSearchResults();
