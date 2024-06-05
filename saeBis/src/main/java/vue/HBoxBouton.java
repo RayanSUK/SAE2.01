@@ -29,7 +29,7 @@ public class HBoxBouton extends HBox {
     /**
      * Label lorsque le joueur gagne
      */
-    private Label labelVictoire;
+    private static Label labelVictoire;
 
     /**
      * Constructeur de la classe.
@@ -92,7 +92,7 @@ public class HBoxBouton extends HBox {
      * @return labelVictoire
      */
 
-    public Label getLabelVictoire() {
+    public static Label getLabelVictoire() {
         return labelVictoire;
     }
 }
