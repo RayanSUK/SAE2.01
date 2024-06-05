@@ -32,6 +32,8 @@ class ConstantesCanvasTest {
 
         // Vérification des noms des options de menu pour le choix des scénarios
         String[] expectedMenuScenarios = {"Choix du scénario"};
-        assertArrayEquals(expectedMenuScenarios, ConstantesCanvas.INTITULE_MENU_SCENARIOS, "Les intitulés des scénarios ne correspondent pas");
+        assertArrayEquals(expectedMenuScenarios, ConstantesCanvas.INTITULE_MENU_ITEMS, "Les intitulés des scénarios ne correspondent pas");
+
+
     }
 }
