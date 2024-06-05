@@ -12,8 +12,8 @@ import controleur.Controleur;
 import java.io.File;
 
 /**
- * La classe VBoxRoot est la racine de la vue de l'application.
- *  Elle organise les différents composants de l'interface
+ * La classe VBoxGauche est la racine de la vue de l'application.
+ *  Elle organise les différents composants de la partie gauche de l'interface (les boutons, la carte, et les menus)
  */
 public class VBoxGauche extends VBox implements ConstantesCanvas {
     /**
@@ -63,7 +63,6 @@ public class VBoxGauche extends VBox implements ConstantesCanvas {
             menuScenarios.getItems().add(menuItem);
         }
 
-
         // ajout
         this.getChildren().add(menuBar);
 
@@ -73,9 +72,6 @@ public class VBoxGauche extends VBox implements ConstantesCanvas {
         itemAlgoHeuristique.setOnAction(controleur);
         menuAlgo.getItems().add(itemAlgoHeuristique);
         this.getChildren().add(canva);
-
-
-
     }
 
     /**
