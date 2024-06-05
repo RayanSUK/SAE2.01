@@ -34,7 +34,8 @@ public class Algorithme {
         this.temples = temples;
     }
 
-    /**La méthode triHeuristique ne prend rien en paramètre et réalise l'algorithme suivant :
+    /**
+     * La méthode triHeuristique ne prend rien en paramètre et réalise l'algorithme suivant :
      * <ul>
      * <li>cherche le cristal non placé le plus proche</li>
      * <li> le récupère </li>
@@ -70,7 +71,7 @@ public class Algorithme {
             }
 
             // Si le cristal est le dernier, on le lâche.
-            apprentiOrdonnateur.lacherCristal();
+            apprentiOrdonnateur.resetCristalPorte();
         }
         System.out.println("La liste des cristaux est : " + cristaux.toString());
         System.out.println("La liste des temples est  : " + temples.toString());
@@ -98,7 +99,8 @@ public class Algorithme {
             cristaux.set(minIndex, cristaux.get(i));
             cristaux.set(i, temp);
         }
-
+        System.out.println("La liste des cristaux est : " + cristaux.toString());
+        System.out.println("La liste des temples est  : " + temples.toString());
     }
 
 }
