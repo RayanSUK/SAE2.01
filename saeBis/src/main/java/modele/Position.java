@@ -30,7 +30,7 @@ public class Position {
     }
 
     /**
-     * La méthode deplacementUneCase déplace la position this d'une case
+     * La méthode déplacementUneCase déplace la position this d'une case
      * pour la rapprocher de celle du paramètre parPosition.
      * Elle incrémente le champ static nombreDePas
      * @param parPosition : la position vers laquelle this se rapproche
@@ -38,7 +38,7 @@ public class Position {
 
     public void deplacementUneCase (Position parPosition){
         nombreDePas++;
-        if (this.abscisse > parPosition.abscisse){
+        if (this.abscisse > parPosition.abscisse) {
             this.abscisse -=1;
             return;
         }
@@ -54,13 +54,12 @@ public class Position {
 
         if (this.ordonnee < parPosition.ordonnee) {
             this.ordonnee += 1;
-            return;
         }
 
     }
 
     /**
-     * La méthode deplacementCristal déplace la position this d'un cristal
+     * La méthode déplacementCristal déplace la position this d'un cristal
      * pour la rapprocher de celle du paramètre parPosition.
      * @param parPosition, la position vers laquelle this se rapproche
      */
@@ -94,7 +93,7 @@ public class Position {
      */
     public boolean equals(Position parPosition){
         if(this.ordonnee == parPosition.ordonnee){
-            if(this.abscisse == parPosition.abscisse){
+            if (this.abscisse == parPosition.abscisse){
                 return true;
             }
         }
@@ -149,7 +148,7 @@ public class Position {
      * @return une chaine de caractère
      */
     public String toString(){
-        return("Position : " + (this.getAbscisse()-16) + ", " + (this.getOrdonnee()-16));
+        return( (this.getAbscisse()-16) + ", " + (this.getOrdonnee()-16));
     }
 
 
