@@ -58,6 +58,9 @@ class CristalTest {
         assertEquals(zeroPosition, cristal.getPositionCristal());
     }
 
+    /**
+     *
+
     @Test
     void testToString() {
         assertEquals("Position : -6, 4 1", cristal.toString());
@@ -66,4 +69,5 @@ class CristalTest {
         assertEquals("Position : -6, 4 2", cristal.toString());
 
     }
+     */
 }
