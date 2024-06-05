@@ -47,35 +47,43 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
     }
 
     /**
-     * La méthode echangeCristaux permet à l'apprenti d'échanger des cristaux s'il se trouve sur la même position
+     * La méthode échangeCristaux permet à l'apprenti d'échanger des cristaux s'il se trouve sur la même position
      * qu'un cristal et si un échange est disponible.
-     * Il reçoit en paramètre le cristal à echanger
+     * Il reçoit en paramètre le cristal à échanger
      * @param cristal , le cristal à échanger
      */
     public void echangeCristaux(Cristal cristal) {
         if (echangeDispo) {
             if (cristal.getPositionCristal().equals(positionApprenti)) {
+                if (cristalPorte != -1) {
+                System.out.println("Vous avez déposé le cristal : " + getCristalPorte().toString() );
+                }
                 cristalPorte = cristaux.indexOf(cristal);
                 echangeDispo = false;
+                System.out.println("Vous avez récupéré le cristal : " + getCristalPorte().toString());
             }
+
         }
     }
 
     /**
-     * La méthode lacherCristal permet de déposer le cristal porté par l'apprentie à sa position
+     * La méthode lâcherCristal permet de déposer le cristal porté par l'apprentie à sa position
      */
     public void lacherCristal() {
         if (cristalPorte == -1){
+            System.out.println("Vous n'avez aucun cristal à déposer.");
             return;
         }
         for (Cristal cristal : cristaux ) {
             // si le joueur est sur un cristal et que celui-là n'est pas le cristal porter
             if (cristal.getPositionCristal().equals(positionApprenti) && !(cristal.equals(cristaux.get(cristalPorte)))) {
+                System.out.println("Vous ne pouvez déposer les cristaux que sur les temples.");
                 return;
             }
         }
         for (Temple temple : temples){
             if (positionApprenti.equals(temple.getPositionTemple())){
+                System.out.println("Vous avez déposé le cristal : " + getCristalPorte().toString());
                 cristalPorte = -1;
             }
 
@@ -87,7 +95,7 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
     /**
      * La méthode templeAssocie prend en paramètre un cristal et retourne l'indice du temple de la même couleur
      * dans la liste de temples.
-     * @param parCristal
+     * @param parCristal le cristal pour lequel on recherche son temple
      * @return Indice temple associé
      */
     public int templeAssocie(Cristal parCristal) {
@@ -99,11 +107,13 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         return -1;
     }
 
-    /**La méthode cristalPlusProche ne prend rien en paramètres et renvoie
+    /**
+     * La méthode cristalPlusProche ne prend rien en paramètres et renvoie
      *  l'indice du cristal le plus proche de l'apprenti ordonnateur.
      * @return indice cristal le plus proche
      */
     public int cristalPlusProche() {
+        if (victoire()) return -1;
         int distanceMin = Integer.MAX_VALUE;
         int indiceCristal = -1;
 
@@ -120,6 +130,7 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
                 indiceCristal = i;
             }
         }
+        System.out.println("Le cristal le plus proche est le cristal : " + cristaux.get(indiceCristal).toString());
         return indiceCristal;
     }
 
@@ -138,10 +149,16 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
 
         }
         if(compteur == temples.size()){
-            System.out.println("Vous avez gagnée");
+            System.out.println("Vous avez gagné !");
             return true;
         }
         return false;
+    }
+
+    public void recommencerPartie() {
+        cristaux = null;
+        temples = null;
+        positionApprenti.resetNombreDePas();
     }
 
 
