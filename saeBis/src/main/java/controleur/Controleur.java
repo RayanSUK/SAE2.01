@@ -37,7 +37,7 @@ public class Controleur implements EventHandler {
             if (((MenuItem) event.getSource()).getText().equals("Algorithme de tri par sélection")) {
                //Algorithme algo = new Algorithme(VBoxGauche.getApprenti(), VBoxGauche.getApprenti().getCristaux(), VBoxGauche.getApprenti().getTemples());
                //algo.triSelectionSansDeplacement();
-                VBoxGauche.getCanvas().triSelection2();
+                VBoxGauche.getCanvas().triSelection();
             }
 
             Object userData = ((MenuItem)event.getSource()).getUserData();
