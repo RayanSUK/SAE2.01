@@ -14,7 +14,6 @@ public class Temple {
      */
     private int couleurTemple;
 
-
     /**
      * Le constructeur de la classe qui reçoit en paramètre la position et la couleur du temple et les instancie
      * @param parPosition, la position du temple
@@ -26,8 +25,7 @@ public class Temple {
 
     }
 
-
-    //création des accesseurs et des setteurs
+    //création des accesseurs et des setters
 
     /**
      * Acceseur au champ temple
@@ -53,6 +51,10 @@ public class Temple {
         return positionTemple;
     }
 
+    /**
+     * Retourne sous forme de texte la position du temple ainsi que sa couleur
+     * @return une chaine de caractère
+     */
     public String toString() {
         return positionTemple.toString() + " " + couleurTemple;
     }
