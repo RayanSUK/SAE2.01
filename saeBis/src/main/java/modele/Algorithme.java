@@ -1,10 +1,32 @@
 package modele;
 import java.util.List;
-
+/**
+ * La classe Algorithme permet d'exécuter les différents algorithmes de tris,
+ * tels que l'algorithme de selection ainsi que l'algorithme heuristique
+ */
 public class Algorithme {
+
+    /**
+     * L'apprenti ordonnateur
+     */
     private ApprentiOrdonnateur apprentiOrdonnateur;
+
+    /**
+     * Une liste contenant tous les cristaux
+     */
     private List<Cristal> cristaux;
+
+    /**
+     * Une liste contenant tous les temples
+     */
     private List<Temple> temples;
+
+    /**
+     * Le constructeur de la classe instancie les trois champs
+     * @param apprentiOrdonnateur l'apprenti ordonnateur
+     * @param cristaux les cristaux du scénario
+     * @param temples les temples du scénario
+     */
 
     public Algorithme(ApprentiOrdonnateur apprentiOrdonnateur, List<Cristal> cristaux, List<Temple> temples) {
         this.apprentiOrdonnateur = apprentiOrdonnateur;
@@ -54,6 +76,12 @@ public class Algorithme {
         System.out.println("La liste des temples est  : " + temples.toString());
     }
 
+    /**
+     * La méthode triSelectionSansDéplacement ne prend rien en paramètre et réalise l'algorithme suivant :
+     * - elle ne déplace pas les éléments inutilement, elle les échange seulement lorsque c'est nécessaire.
+     * -Les cristaux sont triés en fonction de leur temple associé
+     * -Utilise deux boucles imbriquées pour trouver et échanger le plus petit élément non trié avec le premier élément non trié de la liste.
+     */
     public void triSelectionSansDeplacement() {
         //Parcours des cristaux par indice
         for (int i = 0; i < cristaux.size() - 1; i++) {
