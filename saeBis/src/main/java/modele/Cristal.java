@@ -7,23 +7,23 @@ public class Cristal {
     /**
      * La position du cristal
      */
-    private Position positioncristal;
+    private Position positionCristal;
 
     /**
      * La couleur du cristal
      */
-    private int couleurcristal;
+    private int couleurCristal;
 
     /**
      * Constructeur de la classe.
      * Reçoit en paramètre la position du cristal et la couleur du cristal puis l'instancie.
-     * @param parPositioncristal , la position du cristal
-     * @param parCouleurcristal , la couleur du cristal
+     * @param parPositionCristal , la position du cristal
+     * @param parCouleurCristal , la couleur du cristal
      */
 
-    public Cristal(Position parPositioncristal, int parCouleurcristal ){
-        couleurcristal = parCouleurcristal;
-        positioncristal = parPositioncristal;
+    public Cristal(Position parPositionCristal, int parCouleurCristal ){
+        couleurCristal = parCouleurCristal;
+        positionCristal = parPositionCristal;
     }
 
 
@@ -32,7 +32,7 @@ public class Cristal {
      * @return couleurCristal, la couleur du cristal
      */
     public int getCouleurCristal() {
-        return couleurcristal;
+        return couleurCristal;
     }
 
     /**
@@ -40,7 +40,7 @@ public class Cristal {
      * @return positionCristal, la position du cristal
      */
     public Position getPositionCristal() {
-        return positioncristal;
+        return positionCristal;
     }
 
     /**
@@ -49,15 +49,15 @@ public class Cristal {
      */
 
     public void setPositionCristal(Position parPosition){
-        positioncristal = parPosition;
+        positionCristal = parPosition;
     }
 
     /**
      * Modifie la couleur du cristal avec le paramètre couleurCristal
-     * @param couleurcristal, nouvelle couleur du cristal
+     * @param couleurCristal, nouvelle couleur du cristal
      */
-    public void setCouleurCristal(int couleurcristal) {
-        this.couleurcristal = couleurcristal;
+    public void setCouleurCristal(int couleurCristal) {
+        this.couleurCristal = couleurCristal;
     }
 
     /**
@@ -65,7 +65,7 @@ public class Cristal {
      * @return une chaine de caractère
      */
     public String toString() {
-        return positioncristal.toString() + " " + couleurcristal;
+        return positionCristal.toString() + " de couleur " + couleurCristal;
     }
 
 
